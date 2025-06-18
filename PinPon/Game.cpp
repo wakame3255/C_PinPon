@@ -3,6 +3,12 @@
     const float PADDLE_SPEED = 300.0f;
     const float BALL_SPEED = 200.0f;
 
+    const int WINDOW_WIDTH = 1024;
+    const int WINDOW_HEIGHT = 768;
+
+	const int WALL_HEIGHT = 20;
+	const int WALL_SPACE = 300;
+
     bool Game::Initialize() {
         if (SDL_Init(SDL_INIT_VIDEO) != 0) {
             return false;
@@ -12,8 +18,8 @@
             "PinPon",
             100,
             100,
-            1024,
-            768,
+            WINDOW_WIDTH,
+            WINDOW_HEIGHT,
             0
         );
 
@@ -32,14 +38,14 @@
         }
 
         // パドルの初期位置設定
-        Vector2 paddle1Pos{ 50.0f, 768.0f/2.0f };
-        Vector2 paddle2Pos{ 974.0f, 768.0f/2.0f };
+        Vector2 paddle1Pos{ 50.0f, WINDOW_HEIGHT/2.0f };
+        Vector2 paddle2Pos{ WINDOW_WIDTH - 50.0f, WINDOW_HEIGHT/2.0f };
         mPaddlesPos = { paddle1Pos, paddle2Pos };
         mPaddlesDir = { {0,0}, {0,0} };
 
         // ボールの初期化
         Ball ball;
-        ball.pos = { 512.0f, 384.0f };
+        ball.pos = { WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2 };
         ball.vel = { -BALL_SPEED, 0.0f };
         mBalls.push_back(ball);
 
@@ -90,12 +96,14 @@
         }
         mTicksCount = SDL_GetTicks();
 
-        // パドルの更新
+        // すべてのパドルの更新
         for (int i = 0; i < 2; i++) {
             mPaddlesPos[i].y += mPaddlesDir[i].y * PADDLE_SPEED * deltaTime;
+            //パドルの高さの最小値
             if (mPaddlesPos[i].y < 0) {
                 mPaddlesPos[i].y = 0;
             }
+            //パドルの高さの最大値
             else if (mPaddlesPos[i].y > 668.0f) {
                 mPaddlesPos[i].y = 668.0f;
             }
@@ -106,13 +114,16 @@
             ball.pos.x += ball.vel.x * deltaTime;
             ball.pos.y += ball.vel.y * deltaTime;
 
-            // 壁との衝突
-            if (ball.pos.y <= 0) {
-                ball.pos.y = 0;
+            // 上壁との衝突(壁の厚さを考慮)
+            if (ball.pos.y <= 0 + (WALL_SPACE + WALL_HEIGHT ))
+            {
+                ball.pos.y = 0 + (WALL_SPACE + WALL_HEIGHT);
                 ball.vel.y *= -1;
             }
-            else if (ball.pos.y >= 768) {
-                ball.pos.y = 768;
+			// 下壁との衝突
+            else if (ball.pos.y >= WINDOW_HEIGHT - (WALL_SPACE + WALL_HEIGHT )) 
+            {
+                ball.pos.y = WINDOW_HEIGHT - (WALL_SPACE + WALL_HEIGHT );
                 ball.vel.y *= -1;
             }
 
@@ -147,15 +158,25 @@
         SDL_SetRenderDrawColor(mRenderer, 0, 0, 0, 255);
         SDL_RenderClear(mRenderer);
 
-        // 壁の描画
+        // 上壁の描画
         SDL_SetRenderDrawColor(mRenderer, 255, 255, 255, 255);
-        SDL_Rect wall{
+        SDL_Rect upWall{
             0,
-            0,
-            1024,
-            15
+            WALL_SPACE,
+            WINDOW_WIDTH,
+            WALL_HEIGHT
         };
-        SDL_RenderFillRect(mRenderer, &wall);
+        SDL_RenderFillRect(mRenderer, &upWall);
+
+		// 下壁の描画
+        SDL_SetRenderDrawColor(mRenderer, 255, 255, 255, 255);
+        SDL_Rect underWall{
+            0,
+            WINDOW_HEIGHT - (WALL_HEIGHT + WALL_SPACE),
+            WINDOW_WIDTH,
+            WALL_HEIGHT
+        };
+        SDL_RenderFillRect(mRenderer, &underWall);
 
         // パドルの描画
         for (const auto& paddlePos : mPaddlesPos) {
