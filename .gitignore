@@ -1,32 +1,34 @@
-# Prerequisites
-*.d
-
-# Compiled Object files
-*.slo
-*.lo
+# ビルド出力
+build/
+bin/
+obj/
+*.exe
 *.o
 *.obj
-
-# Precompiled Headers
-*.gch
-*.pch
-
-# Compiled Dynamic libraries
+*.lib
+*.dll
 *.so
 *.dylib
-*.dll
 
-# Fortran module files
-*.mod
-*.smod
+# IDE/エディタ固有ファイル
+.vs/
+.vscode/
+*.vcxproj.user
+*.sln.docstates
+*.suo
+*.user
 
-# Compiled Static libraries
-*.lai
-*.la
-*.a
-*.lib
+# OS固有ファイル
+.DS_Store
+Thumbs.db
+desktop.ini
 
-# Executables
-*.exe
-*.out
-*.app
+# デバッグファイル
+*.pdb
+*.ilk
+*.idb
+
+# 一時ファイル
+*.tmp
+*.temp
+*~
