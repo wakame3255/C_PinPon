@@ -1,4 +1,5 @@
-﻿  Hello.cpp
-  PinPon.vcxproj -> C:\Users\Owner\Desktop\C_Project\PinPon\x64\Debug\PinPon.exe
+﻿  Game.cpp
+C:\Users\Owner\Desktop\C_Project\PinPon_Project\PinPon\Game.cpp(1,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+  PinPon.vcxproj -> C:\Users\Owner\Desktop\C_Project\PinPon_Project\x64\Debug\PinPon.exe
   C:\SDL2-2.26.5\lib\x64\SDL2.dll
   1 個のファイルをコピーしました

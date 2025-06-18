@@ -13,10 +13,24 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Source">
+      <UniqueIdentifier>{19b38c2e-67f9-44a7-aac8-fca8ff383a77}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Main">
+      <UniqueIdentifier>{5fc564b5-66ba-4ae1-8e8c-f86659d5c1b0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Hello.cpp">
-      <Filter>ソース ファイル</Filter>
+    <ClCompile Include="Main.cpp">
+      <Filter>Source\Main</Filter>
     </ClCompile>
+    <ClCompile Include="Game.cpp">
+      <Filter>Source\Main</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Game.h">
+      <Filter>Source\Main</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
