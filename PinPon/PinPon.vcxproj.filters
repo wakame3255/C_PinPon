@@ -19,6 +19,9 @@
     <Filter Include="Source\Main">
       <UniqueIdentifier>{5fc564b5-66ba-4ae1-8e8c-f86659d5c1b0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\Utility">
+      <UniqueIdentifier>{bd821304-82ff-48b2-9256-9bb628751eec}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -31,6 +34,9 @@
   <ItemGroup>
     <ClInclude Include="Game.h">
       <Filter>Source\Main</Filter>
+    </ClInclude>
+    <ClInclude Include="UtilityData.h">
+      <Filter>Source\Utility</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
