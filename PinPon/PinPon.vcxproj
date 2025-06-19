@@ -137,7 +137,14 @@
     <ClCompile Include="Main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Ball.h" />
+    <ClInclude Include="CollisionChecker.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="InputSystem.h" />
+    <ClInclude Include="Paddle.h" />
+    <ClInclude Include="Renderer.h" />
+    <ClInclude Include="UtilityData.h" />
+    <ClInclude Include="Vector2.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

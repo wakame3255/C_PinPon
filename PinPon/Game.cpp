@@ -10,8 +10,8 @@
             "PinPon",
             100,
             100,
-            WINDOW_WIDTH,
-            WINDOW_HEIGHT,
+            GameConstants::WINDOW_WIDTH,
+            GameConstants::WINDOW_HEIGHT,
             0
         );
 
@@ -30,15 +30,15 @@
         }
 
         // パドルの初期位置設定
-        Vector2 paddle1Pos{ 50.0f, WINDOW_HEIGHT/2.0f };
-        Vector2 paddle2Pos{ WINDOW_WIDTH - 50.0f, WINDOW_HEIGHT/2.0f };
+        Vector2 paddle1Pos{ 50.0f, GameConstants::WINDOW_HEIGHT/2.0f };
+        Vector2 paddle2Pos{ GameConstants::WINDOW_WIDTH - 50.0f, GameConstants::WINDOW_HEIGHT/2.0f };
         mPaddlesPos = { paddle1Pos, paddle2Pos };
         mPaddlesDir = { {0,0}, {0,0} };
 
         // ボールの初期化
         Ball ball;
-        ball.pos = { WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2 };
-        ball.vel = { -BALL_SPEED, 0.0f };
+        ball.pos = { GameConstants::WINDOW_WIDTH / 2, GameConstants::WINDOW_HEIGHT / 2 };
+        ball.vel = { -GameConstants::BALL_SPEED, 0.0f };
         mBalls.push_back(ball);
 
         mIsRunning = true;
@@ -90,14 +90,14 @@
 
         // すべてのパドルの更新
         for (int i = 0; i < 2; i++) {
-            mPaddlesPos[i].y += mPaddlesDir[i].y * PADDLE_SPEED * deltaTime;
+            mPaddlesPos[i].y += mPaddlesDir[i].y * GameConstants::PADDLE_SPEED * deltaTime;
             //パドルの高さの最小値
-            if (mPaddlesPos[i].y < 0) {
-                mPaddlesPos[i].y = 0;
+            if (mPaddlesPos[i].y > GameConstants::UNDER_WALL - GameConstants::PADDLE_HEIGHT) {
+                mPaddlesPos[i].y = GameConstants::UNDER_WALL - GameConstants::PADDLE_HEIGHT;
             }
             //パドルの高さの最大値
-            else if (mPaddlesPos[i].y > 668.0f) {
-                mPaddlesPos[i].y = 668.0f;
+            else if (mPaddlesPos[i].y < GameConstants::UPPER_WALL) {
+                mPaddlesPos[i].y = GameConstants::UPPER_WALL;
             }
         }
 
@@ -107,41 +107,46 @@
             ball.pos.y += ball.vel.y * deltaTime;
 
             // 上壁との衝突(壁の厚さを考慮)
-            if (ball.pos.y <= 0 + (WALL_SPACE + WALL_HEIGHT ))
+            if (ball.pos.y <= GameConstants::UPPER_WALL)
             {
-                ball.pos.y = 0 + (WALL_SPACE + WALL_HEIGHT);
+                ball.pos.y = GameConstants::UPPER_WALL;
                 ball.vel.y *= -1;
             }
 			// 下壁との衝突
-            else if (ball.pos.y >= WINDOW_HEIGHT - (WALL_SPACE + WALL_HEIGHT )) 
+            else if (ball.pos.y >= GameConstants::UNDER_WALL)
             {
-                ball.pos.y = WINDOW_HEIGHT - (WALL_SPACE + WALL_HEIGHT );
+                ball.pos.y = GameConstants::UNDER_WALL;
                 ball.vel.y *= -1;
             }
 
             // パドルとの衝突
             float diff;
             // 左パドル
-            if (ball.pos.x <= 60 && ball.pos.x >= 40 &&
-                ball.pos.y >= mPaddlesPos[0].y && ball.pos.y <= mPaddlesPos[0].y + 100) {
-                ball.pos.x = 60;
+            if (ball.pos.x <= GameConstants::LEFT_PADDLE_X + GameConstants::PADDLE_WIDTH &&
+                ball.pos.x >= GameConstants::LEFT_PADDLE_X &&
+                ball.pos.y >= mPaddlesPos[0].y &&
+                ball.pos.y <= mPaddlesPos[0].y + GameConstants::PADDLE_HEIGHT) {
+                ball.pos.x = GameConstants::LEFT_PADDLE_X + GameConstants::PADDLE_WIDTH;
                 ball.vel.x *= -1;
                 diff = ball.pos.y - (mPaddlesPos[0].y + 50.0f);
                 ball.vel.y = diff * 2.0f;
             }
             // 右パドル
-            else if (ball.pos.x >= 964 && ball.pos.x <= 984 &&
-                     ball.pos.y >= mPaddlesPos[1].y && ball.pos.y <= mPaddlesPos[1].y + 100) {
-                ball.pos.x = 964;
+            else if (ball.pos.x >= GameConstants::RIGHT_PADDLE_X - GameConstants::PADDLE_WIDTH &&
+                ball.pos.x <= GameConstants::RIGHT_PADDLE_X &&
+                ball.pos.y >= mPaddlesPos[1].y &&
+                ball.pos.y <= mPaddlesPos[1].y + GameConstants::PADDLE_HEIGHT)
+            {
+                ball.pos.x = GameConstants::RIGHT_PADDLE_X - GameConstants::PADDLE_WIDTH;
                 ball.vel.x *= -1;
                 diff = ball.pos.y - (mPaddlesPos[1].y + 50.0f);
                 ball.vel.y = diff * 2.0f;
             }
 
             // ボールが画面外に出たら初期位置に戻す
-            if (ball.pos.x < 0 || ball.pos.x > 1024) {
-                ball.pos = { 512.0f, 384.0f };
-                ball.vel = { -BALL_SPEED, 0.0f };
+            if (ball.pos.x < 0 || ball.pos.x > GameConstants::WINDOW_WIDTH) {
+                ball.pos = { GameConstants::WINDOW_WIDTH / 2, GameConstants::WINDOW_HEIGHT / 2 };
+                ball.vel = { -GameConstants::BALL_SPEED, 0.0f };
             }
         }
     }
@@ -154,9 +159,9 @@
         SDL_SetRenderDrawColor(mRenderer, 255, 255, 255, 255);
         SDL_Rect upWall{
             0,
-            WALL_SPACE,
-            WINDOW_WIDTH,
-            WALL_HEIGHT
+            GameConstants::WALL_SPACE,
+            GameConstants::WINDOW_WIDTH,
+            GameConstants::WALL_HEIGHT
         };
         SDL_RenderFillRect(mRenderer, &upWall);
 
@@ -164,9 +169,9 @@
         SDL_SetRenderDrawColor(mRenderer, 255, 255, 255, 255);
         SDL_Rect underWall{
             0,
-            WINDOW_HEIGHT - (WALL_HEIGHT + WALL_SPACE),
-            WINDOW_WIDTH,
-            WALL_HEIGHT
+            GameConstants::UNDER_WALL,
+            GameConstants::WINDOW_WIDTH,
+            GameConstants::WALL_HEIGHT
         };
         SDL_RenderFillRect(mRenderer, &underWall);
 
@@ -175,8 +180,8 @@
             SDL_Rect paddle{
                 static_cast<int>(paddlePos.x - 10),
                 static_cast<int>(paddlePos.y),
-                20,
-                100
+                GameConstants::PADDLE_WIDTH,
+                GameConstants::PADDLE_HEIGHT
             };
             SDL_RenderFillRect(mRenderer, &paddle);
         }
@@ -230,4 +235,3 @@ void Game::Shutdown()
     }
     SDL_Quit();
 }
-// 既存のコードの前に以下を追加
