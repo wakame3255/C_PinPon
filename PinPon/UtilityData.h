@@ -11,11 +11,11 @@ public:
     //パドル情報
     static constexpr float PADDLE_SPEED = 300.0f;
 	static constexpr float PADDLE_WIDTH = 20.0f;  
-	static constexpr float PADDLE_HEIGHT = 200.0f; 
+	static constexpr float PADDLE_HEIGHT = 300.0f; 
 	static constexpr float PADDLE_SPACE = 20.0f; // パドルの間隔
 
-	static constexpr float RIGHT_PADDLE_X = WINDOW_WIDTH - PADDLE_SPACE;
-	static constexpr float LEFT_PADDLE_X = PADDLE_SPEED;
+	static constexpr float RIGHT_PADDLE_X = WINDOW_WIDTH - (PADDLE_SPACE + PADDLE_WIDTH);
+	static constexpr float LEFT_PADDLE_X = PADDLE_SPACE + PADDLE_WIDTH;
 
     //壁の厚さ
     static constexpr float WALL_HEIGHT = 20.0f;    

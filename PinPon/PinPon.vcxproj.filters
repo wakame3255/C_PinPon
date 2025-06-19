@@ -22,21 +22,54 @@
     <Filter Include="Source\Utility">
       <UniqueIdentifier>{bd821304-82ff-48b2-9256-9bb628751eec}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\Math">
+      <UniqueIdentifier>{24b72d18-f53d-4beb-86c1-bd8af754650b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Core">
+      <UniqueIdentifier>{cb96dc95-9fad-484d-a680-51411f05ab20}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Entities">
+      <UniqueIdentifier>{cb4fd41c-37dd-4cdf-9357-ee389284344c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Managers">
+      <UniqueIdentifier>{04ead1d4-24f0-4c02-b00a-ec080423036e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Rendering">
+      <UniqueIdentifier>{f5dea29a-0d79-4491-a645-998b90c4f1b5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
       <Filter>Source\Main</Filter>
     </ClCompile>
     <ClCompile Include="Game.cpp">
-      <Filter>Source\Main</Filter>
+      <Filter>Source\Core</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Game.h">
-      <Filter>Source\Main</Filter>
-    </ClInclude>
     <ClInclude Include="UtilityData.h">
       <Filter>Source\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="Vector2.h">
+      <Filter>Source\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Game.h">
+      <Filter>Source\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Paddle.h">
+      <Filter>Source\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="Ball.h">
+      <Filter>Source\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="CollisionChecker.h">
+      <Filter>Source\Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer.h">
+      <Filter>Source\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="InputSystem.h">
+      <Filter>Source\Core</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -122,17 +122,22 @@
             // パドルとの衝突
             float diff;
             // 左パドル
-            if (ball.pos.x <= GameConstants::PADDLE_SPACE + GameConstants::PADDLE_WIDTH && ball.pos.x >= GameConstants::PADDLE_SPACE &&
-                ball.pos.y >= mPaddlesPos[0].y && ball.pos.y <= mPaddlesPos[0].y + GameConstants::PADDLE_HEIGHT) {
-                ball.pos.x = GameConstants::PADDLE_SPACE + GameConstants::PADDLE_WIDTH;
+            if (ball.pos.x <= GameConstants::LEFT_PADDLE_X + GameConstants::PADDLE_WIDTH &&
+                ball.pos.x >= GameConstants::LEFT_PADDLE_X &&
+                ball.pos.y >= mPaddlesPos[0].y &&
+                ball.pos.y <= mPaddlesPos[0].y + GameConstants::PADDLE_HEIGHT) {
+                ball.pos.x = GameConstants::LEFT_PADDLE_X + GameConstants::PADDLE_WIDTH;
                 ball.vel.x *= -1;
                 diff = ball.pos.y - (mPaddlesPos[0].y + 50.0f);
                 ball.vel.y = diff * 2.0f;
             }
             // 右パドル
-            else if (ball.pos.x >= GameConstants::RIGHT_PADDLE_X - GameConstants::PADDLE_SPACE && ball.pos.x <= GameConstants::RIGHT_PADDLE_X &&
-                     ball.pos.y >= mPaddlesPos[1].y && ball.pos.y <= mPaddlesPos[1].y + GameConstants::PADDLE_HEIGHT) {
-                ball.pos.x = GameConstants::RIGHT_PADDLE_X - GameConstants::PADDLE_SPACE;
+            else if (ball.pos.x >= GameConstants::RIGHT_PADDLE_X - GameConstants::PADDLE_WIDTH &&
+                ball.pos.x <= GameConstants::RIGHT_PADDLE_X &&
+                ball.pos.y >= mPaddlesPos[1].y &&
+                ball.pos.y <= mPaddlesPos[1].y + GameConstants::PADDLE_HEIGHT)
+            {
+                ball.pos.x = GameConstants::RIGHT_PADDLE_X - GameConstants::PADDLE_WIDTH;
                 ball.vel.x *= -1;
                 diff = ball.pos.y - (mPaddlesPos[1].y + 50.0f);
                 ball.vel.y = diff * 2.0f;
