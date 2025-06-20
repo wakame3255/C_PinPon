@@ -1,3 +1,231 @@
-﻿  PinPon.vcxproj -> C:\Users\Owner\Desktop\C_Project\PinPon_Project\x64\Debug\PinPon.exe
-  C:\SDL2-2.26.5\lib\x64\SDL2.dll
-  1 個のファイルをコピーしました
+﻿  Paddle.cpp
+C:\Users\Owner\Desktop\C_Project\PinPon_Project\PinPon\Game.h(7,8): error C2011: 'Vector2': 'struct' 型の再定義
+  (ソース ファイル 'Paddle.cpp' をコンパイルしています)
+      C:\Users\Owner\Desktop\C_Project\PinPon_Project\PinPon\Vector2.h(3,8):
+      'Vector2' の宣言を確認してください
+  
+C:\Users\Owner\Desktop\C_Project\PinPon_Project\PinPon\Game.h(13,8): error C2011: 'Ball': 'class' 型の再定義
+  (ソース ファイル 'Paddle.cpp' をコンパイルしています)
+      C:\Users\Owner\Desktop\C_Project\PinPon_Project\PinPon\Ball.h(5,7):
+      'Ball' の宣言を確認してください
+  
+C:\Users\Owner\Desktop\C_Project\PinPon_Project\PinPon\Paddle.h(9,10): error C2079: 'Paddle::_position' が 未定義の struct 'Vector2' で使用しています。
+  (ソース ファイル 'Paddle.cpp' をコンパイルしています)
+  
+C:\Users\Owner\Desktop\C_Project\PinPon_Project\PinPon\Paddle.h(10,10): error C2079: 'Paddle::_direction' が 未定義の struct 'Vector2' で使用しています。
+  (ソース ファイル 'Paddle.cpp' をコンパイルしています)
+  
+C:\Users\Owner\Desktop\C_Project\PinPon_Project\PinPon\Paddle.cpp(9,22): error C2027: 認識できない型 'Vector2' が使われています。
+      C:\Users\Owner\Desktop\C_Project\PinPon_Project\PinPon\Vector2.h(3,8):
+      'Vector2' の宣言を確認してください
+  
+C:\Users\Owner\Desktop\C_Project\PinPon_Project\PinPon\Paddle.cpp(9,42): error C2027: 認識できない型 'Vector2' が使われています。
+      C:\Users\Owner\Desktop\C_Project\PinPon_Project\PinPon\Vector2.h(3,8):
+      'Vector2' の宣言を確認してください
+  
+C:\Users\Owner\Desktop\C_Project\PinPon_Project\PinPon\Paddle.cpp(11,26): error C2027: 認識できない型 'Vector2' が使われています。
+      C:\Users\Owner\Desktop\C_Project\PinPon_Project\PinPon\Vector2.h(3,8):
+      'Vector2' の宣言を確認してください
+  
+C:\Users\Owner\Desktop\C_Project\PinPon_Project\PinPon\Paddle.cpp(12,26): error C2027: 認識できない型 'Vector2' が使われています。
+      C:\Users\Owner\Desktop\C_Project\PinPon_Project\PinPon\Vector2.h(3,8):
+      'Vector2' の宣言を確認してください
+  
+C:\Users\Owner\Desktop\C_Project\PinPon_Project\PinPon\Paddle.cpp(15,31): error C2027: 認識できない型 'Vector2' が使われています。
+      C:\Users\Owner\Desktop\C_Project\PinPon_Project\PinPon\Vector2.h(3,8):
+      'Vector2' の宣言を確認してください
+  
+C:\Users\Owner\Desktop\C_Project\PinPon_Project\PinPon\Paddle.cpp(16,26): error C2027: 認識できない型 'Vector2' が使われています。
+      C:\Users\Owner\Desktop\C_Project\PinPon_Project\PinPon\Vector2.h(3,8):
+      'Vector2' の宣言を確認してください
+  
+C:\Users\Owner\Desktop\C_Project\PinPon_Project\PinPon\Paddle.cpp(23,13): error C2079: 'paddle1Pos' が 未定義の struct 'Vector2' で使用しています。
+C:\Users\Owner\Desktop\C_Project\PinPon_Project\PinPon\Paddle.cpp(23,23): error C2440: '初期化中': 'initializer list' から 'int' に変換できません。
+      C:\Users\Owner\Desktop\C_Project\PinPon_Project\PinPon\Paddle.cpp(23,23):
+      初期化子に含まれている要素が多すぎます
+  
+C:\Users\Owner\Desktop\C_Project\PinPon_Project\PinPon\Paddle.cpp(24,13): error C2079: 'paddle2Pos' が 未定義の struct 'Vector2' で使用しています。
+C:\Users\Owner\Desktop\C_Project\PinPon_Project\PinPon\Paddle.cpp(24,23): error C2440: '初期化中': 'initializer list' から 'int' に変換できません。
+      C:\Users\Owner\Desktop\C_Project\PinPon_Project\PinPon\Paddle.cpp(24,23):
+      初期化子に含まれている要素が多すぎます
+  
+C:\Users\Owner\Desktop\C_Project\PinPon_Project\PinPon\Paddle.cpp(25,5): error C2679: 二項演算子 '=': 型 'initializer list' の右オペランドを扱う演算子が見つかりません (または変換できません)。
+      C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.43.34808\include\vector(1529,26):
+      'std::vector<Vector2,std::allocator<Vector2>> &std::vector<Vector2,std::allocator<Vector2>>::operator =(std::initializer_list<_Ty>)' の可能性があります
+          with
+          [
+              _Ty=Vector2
+          ]
+          C:\Users\Owner\Desktop\C_Project\PinPon_Project\PinPon\Paddle.cpp(25,5):
+          'std::vector<Vector2,std::allocator<Vector2>> &std::vector<Vector2,std::allocator<Vector2>>::operator =(std::initializer_list<_Ty>)': 引数 2 を 'initializer list' から 'std::initializer_list<_Ty>' へ変換できません。
+          with
+          [
+              _Ty=Vector2
+          ]
+              C:\Users\Owner\Desktop\C_Project\PinPon_Project\PinPon\Paddle.cpp(25,19):
+              要素 '1': 'int' から '_Ty' への変換ができません
+          with
+          [
+              _Ty=Vector2
+          ]
+              C:\Users\Owner\Desktop\C_Project\PinPon_Project\PinPon\Paddle.cpp(25,19):
+              要素 '2': 'int' から '_Ty' への変換ができません
+          with
+          [
+              _Ty=Vector2
+          ]
+      C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.43.34808\include\vector(1508,26):
+      または 'std::vector<Vector2,std::allocator<Vector2>> &std::vector<Vector2,std::allocator<Vector2>>::operator =(const std::vector<Vector2,std::allocator<Vector2>> &)'
+          C:\Users\Owner\Desktop\C_Project\PinPon_Project\PinPon\Paddle.cpp(25,5):
+          'std::vector<Vector2,std::allocator<Vector2>> &std::vector<Vector2,std::allocator<Vector2>>::operator =(const std::vector<Vector2,std::allocator<Vector2>> &)': 引数 2 を 'initializer list' から 'const std::vector<Vector2,std::allocator<Vector2>> &' へ変換できません。
+              C:\Users\Owner\Desktop\C_Project\PinPon_Project\PinPon\Paddle.cpp(25,19):
+              理由: 'initializer list' から 'const std::vector<Vector2,std::allocator<Vector2>>' へは変換できません。
+              C:\Users\Owner\Desktop\C_Project\PinPon_Project\PinPon\Paddle.cpp(25,19):
+              'std::vector<Vector2,std::allocator<Vector2>>::vector(std::initializer_list<_Ty>,const _Alloc &)': 引数 1 を 'initializer list' から 'std::initializer_list<_Ty>' へ変換できません。
+          with
+          [
+              _Ty=Vector2,
+              _Alloc=std::allocator<Vector2>
+          ]
+          and
+          [
+              _Ty=Vector2
+          ]
+                  C:\Users\Owner\Desktop\C_Project\PinPon_Project\PinPon\Paddle.cpp(25,19):
+                  要素 '1': 'int' から '_Ty' への変換ができません
+          with
+          [
+              _Ty=Vector2
+          ]
+                  C:\Users\Owner\Desktop\C_Project\PinPon_Project\PinPon\Paddle.cpp(25,19):
+                  要素 '2': 'int' から '_Ty' への変換ができません
+          with
+          [
+              _Ty=Vector2
+          ]
+                  C:\Users\Owner\Desktop\C_Project\PinPon_Project\PinPon\Paddle.cpp(25,19):
+                  引数リスト '(initializer list)' を一致させようとしているとき
+      C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.43.34808\include\vector(783,26):
+      または 'std::vector<Vector2,std::allocator<Vector2>> &std::vector<Vector2,std::allocator<Vector2>>::operator =(std::vector<Vector2,std::allocator<Vector2>> &&) noexcept(<expr>)'
+          C:\Users\Owner\Desktop\C_Project\PinPon_Project\PinPon\Paddle.cpp(25,5):
+          'std::vector<Vector2,std::allocator<Vector2>> &std::vector<Vector2,std::allocator<Vector2>>::operator =(std::vector<Vector2,std::allocator<Vector2>> &&) noexcept(<expr>)': 引数 2 を 'initializer list' から 'std::vector<Vector2,std::allocator<Vector2>> &&' へ変換できません。
+              C:\Users\Owner\Desktop\C_Project\PinPon_Project\PinPon\Paddle.cpp(25,19):
+              理由: 'initializer list' から 'std::vector<Vector2,std::allocator<Vector2>>' へは変換できません。
+              C:\Users\Owner\Desktop\C_Project\PinPon_Project\PinPon\Paddle.cpp(25,19):
+              'std::vector<Vector2,std::allocator<Vector2>>::vector(std::initializer_list<_Ty>,const _Alloc &)': 引数 1 を 'initializer list' から 'std::initializer_list<_Ty>' へ変換できません。
+          with
+          [
+              _Ty=Vector2,
+              _Alloc=std::allocator<Vector2>
+          ]
+          and
+          [
+              _Ty=Vector2
+          ]
+                  C:\Users\Owner\Desktop\C_Project\PinPon_Project\PinPon\Paddle.cpp(25,19):
+                  要素 '1': 'int' から '_Ty' への変換ができません
+          with
+          [
+              _Ty=Vector2
+          ]
+                  C:\Users\Owner\Desktop\C_Project\PinPon_Project\PinPon\Paddle.cpp(25,19):
+                  要素 '2': 'int' から '_Ty' への変換ができません
+          with
+          [
+              _Ty=Vector2
+          ]
+                  C:\Users\Owner\Desktop\C_Project\PinPon_Project\PinPon\Paddle.cpp(25,19):
+                  引数リスト '(initializer list)' を一致させようとしているとき
+      C:\Users\Owner\Desktop\C_Project\PinPon_Project\PinPon\Paddle.cpp(25,5):
+      引数リスト '(std::vector<Vector2,std::allocator<Vector2>>, initializer list)' を一致させようとしているとき
+  
+C:\Users\Owner\Desktop\C_Project\PinPon_Project\PinPon\Paddle.cpp(26,5): error C2679: 二項演算子 '=': 型 'initializer list' の右オペランドを扱う演算子が見つかりません (または変換できません)。
+      C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.43.34808\include\vector(1529,26):
+      'std::vector<Vector2,std::allocator<Vector2>> &std::vector<Vector2,std::allocator<Vector2>>::operator =(std::initializer_list<_Ty>)' の可能性があります
+          with
+          [
+              _Ty=Vector2
+          ]
+          C:\Users\Owner\Desktop\C_Project\PinPon_Project\PinPon\Paddle.cpp(26,5):
+          'std::vector<Vector2,std::allocator<Vector2>> &std::vector<Vector2,std::allocator<Vector2>>::operator =(std::initializer_list<_Ty>)': 引数 2 を 'initializer list' から 'std::initializer_list<_Ty>' へ変換できません。
+          with
+          [
+              _Ty=Vector2
+          ]
+              C:\Users\Owner\Desktop\C_Project\PinPon_Project\PinPon\Paddle.cpp(26,19):
+              要素 '1': 'initializer list' から '_Ty' への変換ができません
+          with
+          [
+              _Ty=Vector2
+          ]
+              C:\Users\Owner\Desktop\C_Project\PinPon_Project\PinPon\Paddle.cpp(26,19):
+              要素 '2': 'initializer list' から '_Ty' への変換ができません
+          with
+          [
+              _Ty=Vector2
+          ]
+      C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.43.34808\include\vector(1508,26):
+      または 'std::vector<Vector2,std::allocator<Vector2>> &std::vector<Vector2,std::allocator<Vector2>>::operator =(const std::vector<Vector2,std::allocator<Vector2>> &)'
+          C:\Users\Owner\Desktop\C_Project\PinPon_Project\PinPon\Paddle.cpp(26,5):
+          'std::vector<Vector2,std::allocator<Vector2>> &std::vector<Vector2,std::allocator<Vector2>>::operator =(const std::vector<Vector2,std::allocator<Vector2>> &)': 引数 2 を 'initializer list' から 'const std::vector<Vector2,std::allocator<Vector2>> &' へ変換できません。
+              C:\Users\Owner\Desktop\C_Project\PinPon_Project\PinPon\Paddle.cpp(26,19):
+              理由: 'initializer list' から 'const std::vector<Vector2,std::allocator<Vector2>>' へは変換できません。
+              C:\Users\Owner\Desktop\C_Project\PinPon_Project\PinPon\Paddle.cpp(26,19):
+              'std::vector<Vector2,std::allocator<Vector2>>::vector(std::initializer_list<_Ty>,const _Alloc &)': 引数 1 を 'initializer list' から 'std::initializer_list<_Ty>' へ変換できません。
+          with
+          [
+              _Ty=Vector2,
+              _Alloc=std::allocator<Vector2>
+          ]
+          and
+          [
+              _Ty=Vector2
+          ]
+                  C:\Users\Owner\Desktop\C_Project\PinPon_Project\PinPon\Paddle.cpp(26,19):
+                  要素 '1': 'initializer list' から '_Ty' への変換ができません
+          with
+          [
+              _Ty=Vector2
+          ]
+                  C:\Users\Owner\Desktop\C_Project\PinPon_Project\PinPon\Paddle.cpp(26,19):
+                  要素 '2': 'initializer list' から '_Ty' への変換ができません
+          with
+          [
+              _Ty=Vector2
+          ]
+                  C:\Users\Owner\Desktop\C_Project\PinPon_Project\PinPon\Paddle.cpp(26,19):
+                  引数リスト '(initializer list)' を一致させようとしているとき
+      C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.43.34808\include\vector(783,26):
+      または 'std::vector<Vector2,std::allocator<Vector2>> &std::vector<Vector2,std::allocator<Vector2>>::operator =(std::vector<Vector2,std::allocator<Vector2>> &&) noexcept(<expr>)'
+          C:\Users\Owner\Desktop\C_Project\PinPon_Project\PinPon\Paddle.cpp(26,5):
+          'std::vector<Vector2,std::allocator<Vector2>> &std::vector<Vector2,std::allocator<Vector2>>::operator =(std::vector<Vector2,std::allocator<Vector2>> &&) noexcept(<expr>)': 引数 2 を 'initializer list' から 'std::vector<Vector2,std::allocator<Vector2>> &&' へ変換できません。
+              C:\Users\Owner\Desktop\C_Project\PinPon_Project\PinPon\Paddle.cpp(26,19):
+              理由: 'initializer list' から 'std::vector<Vector2,std::allocator<Vector2>>' へは変換できません。
+              C:\Users\Owner\Desktop\C_Project\PinPon_Project\PinPon\Paddle.cpp(26,19):
+              'std::vector<Vector2,std::allocator<Vector2>>::vector(std::initializer_list<_Ty>,const _Alloc &)': 引数 1 を 'initializer list' から 'std::initializer_list<_Ty>' へ変換できません。
+          with
+          [
+              _Ty=Vector2,
+              _Alloc=std::allocator<Vector2>
+          ]
+          and
+          [
+              _Ty=Vector2
+          ]
+                  C:\Users\Owner\Desktop\C_Project\PinPon_Project\PinPon\Paddle.cpp(26,19):
+                  要素 '1': 'initializer list' から '_Ty' への変換ができません
+          with
+          [
+              _Ty=Vector2
+          ]
+                  C:\Users\Owner\Desktop\C_Project\PinPon_Project\PinPon\Paddle.cpp(26,19):
+                  要素 '2': 'initializer list' から '_Ty' への変換ができません
+          with
+          [
+              _Ty=Vector2
+          ]
+                  C:\Users\Owner\Desktop\C_Project\PinPon_Project\PinPon\Paddle.cpp(26,19):
+                  引数リスト '(initializer list)' を一致させようとしているとき
+      C:\Users\Owner\Desktop\C_Project\PinPon_Project\PinPon\Paddle.cpp(26,5):
+      引数リスト '(std::vector<Vector2,std::allocator<Vector2>>, initializer list)' を一致させようとしているとき
+  
