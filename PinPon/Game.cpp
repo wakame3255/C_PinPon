@@ -211,8 +211,10 @@ Game::Game()
 {
 }
 
+//ゲームの更新処理
 void Game::RunLoop()
 {
+    //メインループ
     while (mIsRunning)
     {
         ProcessInput();
