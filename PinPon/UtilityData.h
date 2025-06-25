@@ -20,7 +20,7 @@ public:
     //壁の厚さ
     static constexpr float WALL_HEIGHT = 20.0f;    
 	// 画面端と壁のスペース
-    static constexpr float WALL_SPACE = 50.0f;
+    static constexpr float WALL_SPACE = 100.0f;
 
     //上壁の位置
     static constexpr float UPPER_WALL = WALL_SPACE + WALL_HEIGHT;

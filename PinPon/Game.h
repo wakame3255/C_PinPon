@@ -1,51 +1,56 @@
 #pragma once
-#include <cstdio>
-#include <cstdlib>
+#include <memory>
 #include <vector>
 #include "SDL.h"
 
-struct Vector2
-{
-	float x;
-	float y;
-};
-
-struct Ball
-{
-	Vector2 pos;
-	Vector2 vel;
-};
+// 前方宣言
+class Ball;
+class Paddle;
+class Renderer;
+class InputSystem;
 
 class Game
 {
-public: 
-	Game();
-	//�Q�[���̏�����
-	bool Initialize();
-	//�Q�[���̃��C�����[�v
-	void RunLoop();
-	//�Q�[���̏I������
-	void Shutdown();
 private:
-	//�Q�[���ɕK�v�Ȋ֐��Q
-	void ProcessInput();
-	void UpdateGame();
-	void GenerateOutput();
-
-	//SDL�̃E�B���h�E
-	SDL_Window* mWindow;
-	//SDL��2D�����_���[
-	SDL_Renderer* mRenderer;
-
-	Uint32 mTicksCount;
-
-	//�Q�[���̏��
-	bool mIsRunning;
-
-
-	std::vector<Ball> mBalls;
+	// ゲームコンポーネント
+	std::unique_ptr<Renderer> mRenderer;        // レンダラー
+	std::unique_ptr<InputSystem> mInputSystem;  // 入力システム
 	
-	std::vector<Vector2> mPaddlesDir;
-
-	std::vector<Vector2> mPaddlesPos;
+	// ゲームオブジェクト
+	std::unique_ptr<Ball> mBall;                // ボール
+	std::unique_ptr<Paddle> mLeftPaddle;        // 左パドル
+	std::unique_ptr<Paddle> mRightPaddle;       // 右パドル
+	
+	// ゲーム状態
+	bool mIsRunning;      // ゲームが実行中かどうか
+	Uint32 mTicksCount;   // 前フレームからの経過時間
+	
+	// スコア
+	int mLeftScore;       // 左プレイヤーのスコア
+	int mRightScore;      // 右プレイヤーのスコア
+	
+	// プライベートメソッド
+	void ProcessInput();   // 入力処理
+	void UpdateGame();     // ゲーム更新処理
+	void GenerateOutput(); // 描画処理
+	
+	// ボールのリセット判定
+	void CheckBallReset();
+	
+	// パドルの入力処理
+	void HandlePaddleInput();
+	
+public:
+	// コンストラクタ・デストラクタ
+	Game();
+	~Game();
+	
+	// ゲームの初期化
+	bool Initialize();
+	
+	// ゲームのメインループ
+	void RunLoop();
+	
+	// ゲームの終了処理
+	void Shutdown();
 };
