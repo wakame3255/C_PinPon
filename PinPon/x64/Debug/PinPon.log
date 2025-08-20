@@ -3,12 +3,24 @@ C:\Users\Owner\Desktop\C_Project\PinPon_Project\PinPon\Ball.cpp(1,1): warning C4
 C:\Users\Owner\Desktop\C_Project\PinPon_Project\PinPon\Ball.h(1,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
   (ソース ファイル 'Ball.cpp' をコンパイルしています)
   
+C:\Users\Owner\Desktop\C_Project\PinPon_Project\PinPon\Vector2.h(1,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+  (ソース ファイル 'Ball.cpp' をコンパイルしています)
+  
+C:\Users\Owner\Desktop\C_Project\PinPon_Project\PinPon\UtilityData.h(1,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+  (ソース ファイル 'Ball.cpp' をコンパイルしています)
+  
   Game.cpp
 C:\Users\Owner\Desktop\C_Project\PinPon_Project\PinPon\Game.cpp(1,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
 C:\Users\Owner\Desktop\C_Project\PinPon_Project\PinPon\Game.h(1,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
   (ソース ファイル 'Game.cpp' をコンパイルしています)
   
 C:\Users\Owner\Desktop\C_Project\PinPon_Project\PinPon\Ball.h(1,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+  (ソース ファイル 'Game.cpp' をコンパイルしています)
+  
+C:\Users\Owner\Desktop\C_Project\PinPon_Project\PinPon\Vector2.h(1,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+  (ソース ファイル 'Game.cpp' をコンパイルしています)
+  
+C:\Users\Owner\Desktop\C_Project\PinPon_Project\PinPon\UtilityData.h(1,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
   (ソース ファイル 'Game.cpp' をコンパイルしています)
   
 C:\Users\Owner\Desktop\C_Project\PinPon_Project\PinPon\Paddle.h(1,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
@@ -20,12 +32,27 @@ C:\Users\Owner\Desktop\C_Project\PinPon_Project\PinPon\Renderer.h(1,1): warning 
 C:\Users\Owner\Desktop\C_Project\PinPon_Project\PinPon\InputSystem.h(1,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
   (ソース ファイル 'Game.cpp' をコンパイルしています)
   
+  InputSystem.cpp
+C:\Users\Owner\Desktop\C_Project\PinPon_Project\PinPon\InputSystem.cpp(1,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+C:\Users\Owner\Desktop\C_Project\PinPon_Project\PinPon\InputSystem.h(1,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+  (ソース ファイル 'InputSystem.cpp' をコンパイルしています)
+  
+  Main.cpp
+C:\Users\Owner\Desktop\C_Project\PinPon_Project\PinPon\Game.h(1,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+  (ソース ファイル 'Main.cpp' をコンパイルしています)
+  
   Paddle.cpp
 C:\Users\Owner\Desktop\C_Project\PinPon_Project\PinPon\Paddle.cpp(1,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
 C:\Users\Owner\Desktop\C_Project\PinPon_Project\PinPon\Paddle.h(1,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
   (ソース ファイル 'Paddle.cpp' をコンパイルしています)
   
+C:\Users\Owner\Desktop\C_Project\PinPon_Project\PinPon\Vector2.h(1,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+  (ソース ファイル 'Paddle.cpp' をコンパイルしています)
+  
 C:\Users\Owner\Desktop\C_Project\PinPon_Project\PinPon\Ball.h(1,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+  (ソース ファイル 'Paddle.cpp' をコンパイルしています)
+  
+C:\Users\Owner\Desktop\C_Project\PinPon_Project\PinPon\UtilityData.h(1,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
   (ソース ファイル 'Paddle.cpp' をコンパイルしています)
   
 C:\Users\Owner\Desktop\C_Project\PinPon_Project\PinPon\Renderer.h(1,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
@@ -36,7 +63,13 @@ C:\Users\Owner\Desktop\C_Project\PinPon_Project\PinPon\Renderer.cpp(1,1): warnin
 C:\Users\Owner\Desktop\C_Project\PinPon_Project\PinPon\Renderer.h(1,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
   (ソース ファイル 'Renderer.cpp' をコンパイルしています)
   
+C:\Users\Owner\Desktop\C_Project\PinPon_Project\PinPon\UtilityData.h(1,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+  (ソース ファイル 'Renderer.cpp' をコンパイルしています)
+  
 C:\Users\Owner\Desktop\C_Project\PinPon_Project\PinPon\Ball.h(1,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+  (ソース ファイル 'Renderer.cpp' をコンパイルしています)
+  
+C:\Users\Owner\Desktop\C_Project\PinPon_Project\PinPon\Vector2.h(1,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
   (ソース ファイル 'Renderer.cpp' をコンパイルしています)
   
 C:\Users\Owner\Desktop\C_Project\PinPon_Project\PinPon\Paddle.h(1,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。

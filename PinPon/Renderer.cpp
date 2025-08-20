@@ -2,6 +2,7 @@
 #include "Ball.h"
 #include "Paddle.h"
 #include <string>
+#include <cmath>
 
 // コンストラクタ
 Renderer::Renderer()
@@ -29,7 +30,7 @@ bool Renderer::Initialize()
 	
 	// ウィンドウの作成
 	mWindow = SDL_CreateWindow(
-		"PinPon Game",                                    // ウィンドウタイトル
+		"PinPon Game - Enhanced Edition",                  // ウィンドウタイトル
 		100,                                              // X座標
 		100,                                              // Y座標
 		static_cast<int>(GameConstants::WINDOW_WIDTH),   // 幅
@@ -76,8 +77,8 @@ void Renderer::Shutdown()
 // 画面クリア
 void Renderer::Clear()
 {
-	// 背景色を黒に設定
-	SDL_SetRenderDrawColor(mRenderer, 0, 0, 0, 255);
+	// 背景色を濃い青に設定
+	SetRenderColor(20, 30, 60);
 	SDL_RenderClear(mRenderer);
 }
 
@@ -87,11 +88,24 @@ void Renderer::Present()
 	SDL_RenderPresent(mRenderer);
 }
 
+// 色設定のヘルパー関数
+void Renderer::SetRenderColor(int r, int g, int b, int a) {
+	SDL_SetRenderDrawColor(mRenderer, r, g, b, a);
+}
+
 // パドルの描画
 void Renderer::DrawPaddle(const Paddle& paddle)
 {
-	// パドルを白色で描画
-	SDL_SetRenderDrawColor(mRenderer, 255, 255, 255, 255);
+	// パドルを明るい青色で描画
+	if (paddle.IsLeftPaddle()) {
+		SetRenderColor(GameConstants::Colors::BLUE.r, 
+		               GameConstants::Colors::BLUE.g, 
+		               GameConstants::Colors::BLUE.b);
+	} else {
+		SetRenderColor(GameConstants::Colors::RED.r, 
+		               GameConstants::Colors::RED.g, 
+		               GameConstants::Colors::RED.b);
+	}
 	
 	// パドルの矩形を作成
 	Vector2 pos = paddle.GetPosition();
@@ -104,33 +118,83 @@ void Renderer::DrawPaddle(const Paddle& paddle)
 	
 	// パドルを塗りつぶし描画
 	SDL_RenderFillRect(mRenderer, &paddleRect);
+	
+	// パドルの境界線を白で描画
+	SetRenderColor(GameConstants::Colors::WHITE.r, 
+	               GameConstants::Colors::WHITE.g, 
+	               GameConstants::Colors::WHITE.b);
+	SDL_RenderDrawRect(mRenderer, &paddleRect);
 }
 
-// ボールの描画
+// ボールの描画（円として描画）
 void Renderer::DrawBall(const Ball& ball)
 {
-	// ボールを白色で描画
-	SDL_SetRenderDrawColor(mRenderer, 255, 255, 255, 255);
-	
-	// ボールの矩形を作成（円の代わりに正方形で簡易的に描画）
 	Vector2 pos = ball.GetPosition();
 	float radius = ball.GetRadius();
-	SDL_Rect ballRect{
-		static_cast<int>(pos.x - radius),
-		static_cast<int>(pos.y - radius),
-		static_cast<int>(radius * 2),
-		static_cast<int>(radius * 2)
-	};
 	
-	// ボールを塗りつぶし描画
-	SDL_RenderFillRect(mRenderer, &ballRect);
+	// ボールを黄色で描画
+	SetRenderColor(GameConstants::Colors::YELLOW.r, 
+	               GameConstants::Colors::YELLOW.g, 
+	               GameConstants::Colors::YELLOW.b);
+	
+	// 円として描画
+	DrawFilledCircle(static_cast<int>(pos.x), static_cast<int>(pos.y), static_cast<int>(radius));
+	
+	// ボールの境界線を白で描画
+	SetRenderColor(GameConstants::Colors::WHITE.r, 
+	               GameConstants::Colors::WHITE.g, 
+	               GameConstants::Colors::WHITE.b);
+	DrawCircle(static_cast<int>(pos.x), static_cast<int>(pos.y), static_cast<int>(radius));
+}
+
+// 円の描画（境界線のみ）
+void Renderer::DrawCircle(int centerX, int centerY, int radius) {
+	int x = radius;
+	int y = 0;
+	int decisionParameter = 1 - radius;
+	
+	while (x >= y) {
+		// 8つの対称点を描画
+		SDL_RenderDrawPoint(mRenderer, centerX + x, centerY + y);
+		SDL_RenderDrawPoint(mRenderer, centerX - x, centerY + y);
+		SDL_RenderDrawPoint(mRenderer, centerX + x, centerY - y);
+		SDL_RenderDrawPoint(mRenderer, centerX - x, centerY - y);
+		SDL_RenderDrawPoint(mRenderer, centerX + y, centerY + x);
+		SDL_RenderDrawPoint(mRenderer, centerX - y, centerY + x);
+		SDL_RenderDrawPoint(mRenderer, centerX + y, centerY - x);
+		SDL_RenderDrawPoint(mRenderer, centerX - y, centerY - x);
+		
+		y++;
+		
+		if (decisionParameter <= 0) {
+			decisionParameter += 2 * y + 1;
+		} else {
+			x--;
+			decisionParameter += 2 * (y - x) + 1;
+		}
+	}
+}
+
+// 塗りつぶされた円の描画
+void Renderer::DrawFilledCircle(int centerX, int centerY, int radius) {
+	for (int w = 0; w < radius * 2; w++) {
+		for (int h = 0; h < radius * 2; h++) {
+			int dx = radius - w;
+			int dy = radius - h;
+			if ((dx * dx + dy * dy) <= (radius * radius)) {
+				SDL_RenderDrawPoint(mRenderer, centerX + dx, centerY + dy);
+			}
+		}
+	}
 }
 
 // 壁の描画
 void Renderer::DrawWalls()
 {
-	// 壁を白色で描画
-	SDL_SetRenderDrawColor(mRenderer, 255, 255, 255, 255);
+	// 壁を緑色で描画
+	SetRenderColor(GameConstants::Colors::GREEN.r, 
+	               GameConstants::Colors::GREEN.g, 
+	               GameConstants::Colors::GREEN.b);
 	
 	// 上壁の描画
 	SDL_Rect upperWall{
@@ -149,20 +213,113 @@ void Renderer::DrawWalls()
 		static_cast<int>(GameConstants::WALL_HEIGHT)         // 高さ
 	};
 	SDL_RenderFillRect(mRenderer, &lowerWall);
+	
+	// 境界線を白で描画
+	SetRenderColor(GameConstants::Colors::WHITE.r, 
+	               GameConstants::Colors::WHITE.g, 
+	               GameConstants::Colors::WHITE.b);
+	SDL_RenderDrawRect(mRenderer, &upperWall);
+	SDL_RenderDrawRect(mRenderer, &lowerWall);
 }
 
-// スコアの描画（現在は実装なし）
+// スコアの描画
 void Renderer::DrawScore(int leftScore, int rightScore)
 {
-	// TODO: TTFフォントを使用してスコアを描画する
-	// 現在は実装を省略
+	// スコアを白色で描画
+	SetRenderColor(GameConstants::Colors::WHITE.r, 
+	               GameConstants::Colors::WHITE.g, 
+	               GameConstants::Colors::WHITE.b);
+	
+	// 左スコアの描画（画面左上）
+	DrawDigit(leftScore, 50, 50, 4);
+	
+	// 右スコアの描画（画面右上）
+	DrawDigit(rightScore, static_cast<int>(GameConstants::WINDOW_WIDTH) - 100, 50, 4);
+	
+	// 勝利スコアの表示
+	std::string winText = "First to " + std::to_string(GameConstants::WINNING_SCORE);
+	DrawSimpleText(winText, static_cast<int>(GameConstants::WINDOW_WIDTH / 2) - 100, 30, 1);
+}
+
+// 数字の描画（0-9用の簡易フォント）
+void Renderer::DrawDigit(int digit, int x, int y, int scale) {
+	if (digit < 0 || digit > 9) return;
+	
+	int pixelSize = 2 * scale;
+	
+	// 7セグメントディスプレイ風の数字描画
+	bool segments[10][7] = {
+		{1,1,1,1,1,1,0}, // 0
+		{0,1,1,0,0,0,0}, // 1
+		{1,1,0,1,1,0,1}, // 2
+		{1,1,1,1,0,0,1}, // 3
+		{0,1,1,0,0,1,1}, // 4
+		{1,0,1,1,0,1,1}, // 5
+		{1,0,1,1,1,1,1}, // 6
+		{1,1,1,0,0,0,0}, // 7
+		{1,1,1,1,1,1,1}, // 8
+		{1,1,1,1,0,1,1}  // 9
+	};
+	
+	int segmentWidth = 8 * scale;
+	int segmentHeight = 3 * scale;
+	
+	// 各セグメントの描画
+	if (segments[digit][0]) { // 上
+		SDL_Rect rect = {x, y, segmentWidth, segmentHeight};
+		SDL_RenderFillRect(mRenderer, &rect);
+	}
+	if (segments[digit][1]) { // 右上
+		SDL_Rect rect = {x + segmentWidth - segmentHeight, y, segmentHeight, segmentWidth};
+		SDL_RenderFillRect(mRenderer, &rect);
+	}
+	if (segments[digit][2]) { // 右下
+		SDL_Rect rect = {x + segmentWidth - segmentHeight, y + segmentWidth, segmentHeight, segmentWidth};
+		SDL_RenderFillRect(mRenderer, &rect);
+	}
+	if (segments[digit][3]) { // 下
+		SDL_Rect rect = {x, y + 2 * segmentWidth - segmentHeight, segmentWidth, segmentHeight};
+		SDL_RenderFillRect(mRenderer, &rect);
+	}
+	if (segments[digit][4]) { // 左下
+		SDL_Rect rect = {x, y + segmentWidth, segmentHeight, segmentWidth};
+		SDL_RenderFillRect(mRenderer, &rect);
+	}
+	if (segments[digit][5]) { // 左上
+		SDL_Rect rect = {x, y, segmentHeight, segmentWidth};
+		SDL_RenderFillRect(mRenderer, &rect);
+	}
+	if (segments[digit][6]) { // 中央
+		SDL_Rect rect = {x, y + segmentWidth - segmentHeight/2, segmentWidth, segmentHeight};
+		SDL_RenderFillRect(mRenderer, &rect);
+	}
+}
+
+// 簡易テキスト描画
+void Renderer::DrawSimpleText(const std::string& text, int x, int y, int scale) {
+	int currentX = x;
+	for (char c : text) {
+		if (c >= '0' && c <= '9') {
+			DrawDigit(c - '0', currentX, y, scale);
+			currentX += 12 * scale;
+		} else if (c == ' ') {
+			currentX += 6 * scale;
+		} else {
+			// その他の文字は簡易的に四角で表示
+			SDL_Rect rect = {currentX, y, 8 * scale, 12 * scale};
+			SDL_RenderDrawRect(mRenderer, &rect);
+			currentX += 10 * scale;
+		}
+	}
 }
 
 // センターラインの描画
 void Renderer::DrawCenterLine()
 {
-	// センターラインを白色で描画
-	SDL_SetRenderDrawColor(mRenderer, 255, 255, 255, 255);
+	// センターラインを明るい白色で描画
+	SetRenderColor(GameConstants::Colors::WHITE.r, 
+	               GameConstants::Colors::WHITE.g, 
+	               GameConstants::Colors::WHITE.b);
 	
 	// 破線のセンターラインを描画
 	int centerX = static_cast<int>(GameConstants::WINDOW_WIDTH / 2);
@@ -182,4 +339,64 @@ void Renderer::DrawCenterLine()
 		};
 		SDL_RenderFillRect(mRenderer, &segment);
 	}
+}
+
+// ポーズメッセージの描画
+void Renderer::DrawPauseMessage() {
+	// 暗いオーバーレイ（半透明は使わない）
+	SetRenderColor(50, 50, 50);
+	SDL_Rect overlay = {0, 0, static_cast<int>(GameConstants::WINDOW_WIDTH), static_cast<int>(GameConstants::WINDOW_HEIGHT)};
+	SDL_RenderFillRect(mRenderer, &overlay);
+	
+	// ポーズメッセージ
+	SetRenderColor(GameConstants::Colors::WHITE.r, 
+	               GameConstants::Colors::WHITE.g, 
+	               GameConstants::Colors::WHITE.b);
+	
+	int centerX = static_cast<int>(GameConstants::WINDOW_WIDTH / 2);
+	int centerY = static_cast<int>(GameConstants::WINDOW_HEIGHT / 2);
+	
+	DrawSimpleText("PAUSED", centerX - 80, centerY - 30, 3);
+	DrawSimpleText("Press ESC P or SPACE to resume", centerX - 200, centerY + 30, 1);
+}
+
+// ゲームオーバーメッセージの描画
+void Renderer::DrawGameOverMessage(int leftScore, int rightScore) {
+	// 暗いオーバーレイ（半透明は使わない）
+	SetRenderColor(40, 40, 40);
+	SDL_Rect overlay = {0, 0, static_cast<int>(GameConstants::WINDOW_WIDTH), static_cast<int>(GameConstants::WINDOW_HEIGHT)};
+	SDL_RenderFillRect(mRenderer, &overlay);
+	
+	int centerX = static_cast<int>(GameConstants::WINDOW_WIDTH / 2);
+	int centerY = static_cast<int>(GameConstants::WINDOW_HEIGHT / 2);
+	
+	// ゲームオーバーメッセージ
+	SetRenderColor(GameConstants::Colors::YELLOW.r, 
+	               GameConstants::Colors::YELLOW.g, 
+	               GameConstants::Colors::YELLOW.b);
+	
+	DrawSimpleText("GAME OVER", centerX - 120, centerY - 60, 3);
+	
+	// 勝者の表示
+	SetRenderColor(GameConstants::Colors::WHITE.r, 
+	               GameConstants::Colors::WHITE.g, 
+	               GameConstants::Colors::WHITE.b);
+	
+	if (leftScore > rightScore) {
+		SetRenderColor(GameConstants::Colors::BLUE.r, 
+		               GameConstants::Colors::BLUE.g, 
+		               GameConstants::Colors::BLUE.b);
+		DrawSimpleText("LEFT PLAYER WINS", centerX - 140, centerY - 10, 2);
+	} else {
+		SetRenderColor(GameConstants::Colors::RED.r, 
+		               GameConstants::Colors::RED.g, 
+		               GameConstants::Colors::RED.b);
+		DrawSimpleText("RIGHT PLAYER WINS", centerX - 150, centerY - 10, 2);
+	}
+	
+	// リスタート指示
+	SetRenderColor(GameConstants::Colors::WHITE.r, 
+	               GameConstants::Colors::WHITE.g, 
+	               GameConstants::Colors::WHITE.b);
+	DrawSimpleText("Press SPACE ENTER or R to restart", centerX - 250, centerY + 40, 1);
 }

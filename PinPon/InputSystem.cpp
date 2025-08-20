@@ -4,13 +4,25 @@
 InputSystem::InputSystem()
 	: mKeyboardState(nullptr)
 	, mShouldQuit(false)
+	, mNumKeys(0)
 {
 	// キーボード状態の初期取得
-	mKeyboardState = SDL_GetKeyboardState(nullptr);
+	mKeyboardState = SDL_GetKeyboardState(&mNumKeys);
+	
+	// 前フレームの状態を初期化
+	mPreviousKeyboardState.resize(mNumKeys);
+	if (mKeyboardState) {
+		for (int i = 0; i < mNumKeys; ++i) {
+			mPreviousKeyboardState[i] = mKeyboardState[i];
+		}
+	}
 }
 
 // 入力処理の更新
 void InputSystem::ProcessInput() {
+	// 前フレームの状態を保存
+	SavePreviousKeyboardState();
+	
 	// SDLイベントの処理
 	SDL_Event event;
 	while (SDL_PollEvent(&event)) {
@@ -20,32 +32,45 @@ void InputSystem::ProcessInput() {
 			mShouldQuit = true;
 			break;
 			
-		case SDL_KEYDOWN:
-			// キーが押された際の処理
-			if (event.key.keysym.sym == SDLK_ESCAPE) {
-				// ESCキーで終了
-				mShouldQuit = true;
-			}
+		default:
+			// その他のイベントは無視
 			break;
 		}
 	}
 	
 	// キーボード状態を更新
-	// SDL_PumpEvents(); // SDL_PollEventで自動的に呼ばれるため不要
 	mKeyboardState = SDL_GetKeyboardState(nullptr);
+}
+
+// 前フレームのキーボード状態を保存
+void InputSystem::SavePreviousKeyboardState() {
+	if (mKeyboardState && mNumKeys > 0) {
+		for (int i = 0; i < mNumKeys; ++i) {
+			mPreviousKeyboardState[i] = mKeyboardState[i];
+		}
+	}
 }
 
 // キーが押されているかチェック
 bool InputSystem::IsKeyPressed(SDL_Scancode key) const {
-	if (mKeyboardState) {
+	if (mKeyboardState && key < mNumKeys) {
 		return mKeyboardState[key] != 0;
 	}
 	return false;
 }
 
-// 特定のキーが今フレームで押されたかチェック（簡易実装）
+// 特定のキーが今フレームで押されたかチェック
 bool InputSystem::IsKeyJustPressed(SDL_Scancode key) const {
-	// TODO: 前フレームの状態と比較する実装が必要
-	// 現在は単純に押されているかどうかを返す
-	return IsKeyPressed(key);
+	if (mKeyboardState && key < mNumKeys && key < mPreviousKeyboardState.size()) {
+		return (mKeyboardState[key] != 0) && (mPreviousKeyboardState[key] == 0);
+	}
+	return false;
+}
+
+// 特定のキーが今フレームで離されたかチェック
+bool InputSystem::IsKeyJustReleased(SDL_Scancode key) const {
+	if (mKeyboardState && key < mNumKeys && key < mPreviousKeyboardState.size()) {
+		return (mKeyboardState[key] == 0) && (mPreviousKeyboardState[key] != 0);
+	}
+	return false;
 }

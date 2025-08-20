@@ -1,9 +1,11 @@
 #include "Paddle.h"
+#include <algorithm>
+#include <cmath>
 
 // コンストラクタ
 Paddle::Paddle(bool isLeft)
-	: _position({ 0.0f, 0.0f })
-	, _direction({ 0.0f, 0.0f })
+	: _position(Vector2::Zero())
+	, _direction(Vector2::Zero())
 	, _speed(GameConstants::PADDLE_SPEED)
 	, _width(GameConstants::PADDLE_WIDTH)
 	, _height(GameConstants::PADDLE_HEIGHT)
@@ -21,19 +23,19 @@ void Paddle::Entry() {
 	}
 	else {
 		// 右側のパドル
-		_position.x = GameConstants::RIGHT_PADDLE_X - _width;
+		_position.x = GameConstants::RIGHT_PADDLE_X;
 	}
 	// Y座標は画面中央に配置
 	_position.y = GameConstants::WINDOW_HEIGHT / 2.0f - _height / 2.0f;
 	
 	// 初期の移動方向はゼロ
-	_direction = { 0.0f, 0.0f };
+	_direction = Vector2::Zero();
 }
 
 // 更新処理
 void Paddle::Update(float deltaTime) {
 	// パドルの位置を更新
-	_position.y += _direction.y * _speed * deltaTime;
+	_position += _direction * _speed * deltaTime;
 	
 	// パドルが画面上端を超えないようにする
 	if (_position.y < GameConstants::UPPER_WALL) {
@@ -45,21 +47,10 @@ void Paddle::Update(float deltaTime) {
 	}
 }
 
-// 描画処理
+// 描画処理（Rendererに移動したため削除）
 void Paddle::Draw(SDL_Renderer* renderer) {
-	// パドルを白色で描画
-	SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
-	
-	// パドルの矩形を作成
-	SDL_Rect paddleRect{
-		static_cast<int>(_position.x),
-		static_cast<int>(_position.y),
-		static_cast<int>(_width),
-		static_cast<int>(_height)
-	};
-	
-	// パドルを描画
-	SDL_RenderFillRect(renderer, &paddleRect);
+	// この関数は使用されなくなりました
+	// 描画はRenderer::DrawPaddle()で処理されます
 }
 
 // ボールとの衝突判定
@@ -116,12 +107,50 @@ void Paddle::HandleBallCollision(Ball& ball) {
 	// X方向の速度を反転
 	ball.ReverseVelocityX();
 	
-	// パドルの中心からの距離に応じてY方向の速度を調整
+	// パドルの中心からの距離に応じてY方向の速度を調整（改善された計算）
 	float paddleCenter = _position.y + _height / 2.0f;
-	float diff = ballPos.y - paddleCenter;
+	float relativeIntersectY = ballPos.y - paddleCenter;
+	float normalizedRelativeIntersection = relativeIntersectY / (_height / 2.0f);
 	
-	// 差分に応じてY方向の速度を設定（スピン効果）
-	ballVel = ball.GetVelocity();
-	ballVel.y = diff * 2.0f;  // 差分に比例した速度を設定
-	ball.SetVelocity(ballVel);
+	// 反射角度を計算（最大45度）
+	float maxBounceAngle = 60.0f * 3.14159f / 180.0f; // 60度をラジアンに変換
+	float bounceAngle = normalizedRelativeIntersection * maxBounceAngle;
+	
+	// 新しい速度を計算
+	float currentSpeed = ballVel.Length();
+	float newSpeedX = currentSpeed * std::cos(bounceAngle);
+	float newSpeedY = currentSpeed * std::sin(bounceAngle);
+	
+	// 方向を考慮して速度を設定
+	if (_isLeftPaddle) {
+		newSpeedX = std::abs(newSpeedX);  // 右方向
+	} else {
+		newSpeedX = -std::abs(newSpeedX); // 左方向
+	}
+	
+	// パドルの移動による追加の効果
+	if (_direction.y != 0.0f) {
+		newSpeedY += _direction.y * _speed * 0.1f; // パドルの移動速度の10%を追加
+	}
+	
+	// 速度を適用
+	ball.SetVelocity(Vector2(newSpeedX, newSpeedY));
+	
+	// 速度増加効果
+	Vector2 finalVel = ball.GetVelocity();
+	finalVel *= GameConstants::BALL_SPEED_INCREASE;
+	
+	// 速度制限
+	float maxSpeed = GameConstants::BALL_SPEED * 2.5f;
+	if (finalVel.Length() > maxSpeed) {
+		finalVel = finalVel.Normalized() * maxSpeed;
+	}
+	
+	// 最小速度保証
+	float minSpeed = GameConstants::BALL_SPEED * 0.8f;
+	if (finalVel.Length() < minSpeed) {
+		finalVel = finalVel.Normalized() * minSpeed;
+	}
+	
+	ball.SetVelocity(finalVel);
 }
