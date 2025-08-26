@@ -9,7 +9,7 @@ public:
     static constexpr float WINDOW_HEIGHT = 768.0f;
 
     // ボールの設定
-    static constexpr float BALL_SPEED = 200.0f;
+    static constexpr float BALL_SPEED = 500.0f;
     static constexpr float BALL_RADIUS = 8.0f;
     static constexpr float BALL_SPEED_INCREASE = 1.05f; // 速度上昇率
 
@@ -32,8 +32,8 @@ public:
     static constexpr float UNDER_WALL = WINDOW_HEIGHT - (WALL_SPACE + WALL_HEIGHT);
     
     // ゲーム設定
-    static constexpr int WINNING_SCORE = 10;       // 勝利スコア
-    static constexpr float SCORE_RESET_DELAY = 2.0f; // スコア後の待機時間
+    static constexpr int WINNING_SCORE = 1;       // 勝利スコア
+    static constexpr float SCORE_RESET_DELAY = 1.0f; // スコア後の待機時間
     
     // 色の定義（RGB）
     struct Colors {

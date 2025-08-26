@@ -1,5 +1,6 @@
 #pragma once
 #include "SDL.h"
+#include "SDL_ttf.h"
 #include "UtilityData.h"
 #include <vector>
 #include <string>
@@ -13,6 +14,7 @@ class Renderer
 private:
 	SDL_Window* mWindow;      // SDLウィンドウ
 	SDL_Renderer* mRenderer;  // SDL2Dレンダラー
+	TTF_Font* mFont;          // フォント（将来の拡張用）
 	
 	// 円を描画するためのヘルパー関数
 	void DrawCircle(int centerX, int centerY, int radius);

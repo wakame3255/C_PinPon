@@ -1,0 +1,14 @@
+﻿  Ball.cpp
+  Game.cpp
+  InputSystem.cpp
+  Main.cpp
+  Paddle.cpp
+  Renderer.cpp
+  コード生成しています。
+  Previous IPDB not found, fall back to full compilation.
+  All 319 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  コード生成が終了しました。
+  PinPon.vcxproj -> C:\Users\Owner\Desktop\C_Project\PinPon_Project\x64\Release\PinPon.exe
+  C:\SDL2-2.26.5\lib\x64\SDL2.dll
+  C:\SDL2-2.26.5\lib\x64\SDL2_ttf.dll
+  2 個のファイルをコピーしました

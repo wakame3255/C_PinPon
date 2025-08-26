@@ -3,11 +3,13 @@
 #include "Paddle.h"
 #include <string>
 #include <cmath>
+#include "SDL_ttf.h"
 
 // コンストラクタ
 Renderer::Renderer()
 	: mWindow(nullptr)
 	, mRenderer(nullptr)
+	, mFont(nullptr)
 {
 	// メンバー変数の初期化
 }
@@ -20,6 +22,7 @@ Renderer::~Renderer()
 }
 
 // 初期化処理
+// 初期化処理
 bool Renderer::Initialize()
 {
 	// SDLビデオサブシステムの初期化
@@ -27,46 +30,73 @@ bool Renderer::Initialize()
 		SDL_Log("Unable to initialize SDL: %s", SDL_GetError());
 		return false;
 	}
-	
+
 	// ウィンドウの作成
 	mWindow = SDL_CreateWindow(
-		"PinPon Game - Enhanced Edition",                  // ウィンドウタイトル
-		100,                                              // X座標
-		100,                                              // Y座標
-		static_cast<int>(GameConstants::WINDOW_WIDTH),   // 幅
-		static_cast<int>(GameConstants::WINDOW_HEIGHT),  // 高さ
-		0                                                 // フラグ
+		"PinPon Game - Enhanced Edition",
+		100,
+		100,
+		static_cast<int>(GameConstants::WINDOW_WIDTH),
+		static_cast<int>(GameConstants::WINDOW_HEIGHT),
+		0
 	);
-	
+
 	if (!mWindow) {
 		SDL_Log("Failed to create window: %s", SDL_GetError());
 		return false;
 	}
-	
+
 	// レンダラーの作成（垂直同期を有効化）
 	mRenderer = SDL_CreateRenderer(
 		mWindow,
 		-1,
 		SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC
 	);
-	
+
 	if (!mRenderer) {
 		SDL_Log("Failed to create renderer: %s", SDL_GetError());
 		return false;
 	}
-	
+
+	// SDL_ttf の初期化
+	if (TTF_Init() == -1) {
+		SDL_Log("Unable to initialize SDL_ttf: %s", TTF_GetError());
+		return false;  // フォントが必須の場合は false を返す
+	}
+
+	// フォントの読み込み（WindowsのメイリオまたはMS Gothic）
+	mFont = TTF_OpenFont("fonts/arial.ttf", 24);
+	if (!mFont) {
+		// フォールバック：MS Gothic を試す
+		mFont = TTF_OpenFont("C:\\Windows\\Fonts\\msgothic.ttc", 24);
+		if (!mFont) {
+			SDL_Log("Failed to open font: %s", TTF_GetError());
+			return false;
+		}
+	}
+
 	return true;
 }
 
 // 終了処理
+// 終了処理
 void Renderer::Shutdown()
 {
+	// フォントの破棄
+	if (mFont) {
+		TTF_CloseFont(mFont);
+		mFont = nullptr;
+	}
+
+	// SDL_ttf の終了
+	TTF_Quit();
+
 	// レンダラーの破棄
 	if (mRenderer) {
 		SDL_DestroyRenderer(mRenderer);
 		mRenderer = nullptr;
 	}
-	
+
 	// ウィンドウの破棄
 	if (mWindow) {
 		SDL_DestroyWindow(mWindow);
@@ -231,10 +261,10 @@ void Renderer::DrawScore(int leftScore, int rightScore)
 	               GameConstants::Colors::WHITE.b);
 	
 	// 左スコアの描画（画面左上）
-	DrawDigit(leftScore, 50, 50, 4);
+	DrawDigit(leftScore, 50, 0, 4);
 	
 	// 右スコアの描画（画面右上）
-	DrawDigit(rightScore, static_cast<int>(GameConstants::WINDOW_WIDTH) - 100, 50, 4);
+	DrawDigit(rightScore, static_cast<int>(GameConstants::WINDOW_WIDTH) - 100, 0, 4);
 	
 	// 勝利スコアの表示
 	std::string winText = "First to " + std::to_string(GameConstants::WINNING_SCORE);
@@ -296,21 +326,64 @@ void Renderer::DrawDigit(int digit, int x, int y, int scale) {
 }
 
 // 簡易テキスト描画
+// SDL_ttf による高品質テキスト描画
 void Renderer::DrawSimpleText(const std::string& text, int x, int y, int scale) {
-	int currentX = x;
-	for (char c : text) {
-		if (c >= '0' && c <= '9') {
-			DrawDigit(c - '0', currentX, y, scale);
-			currentX += 12 * scale;
-		} else if (c == ' ') {
-			currentX += 6 * scale;
-		} else {
-			// その他の文字は簡易的に四角で表示
-			SDL_Rect rect = {currentX, y, 8 * scale, 12 * scale};
-			SDL_RenderDrawRect(mRenderer, &rect);
-			currentX += 10 * scale;
+	// フォントが初期化されていない場合はフォールバック
+	if (!mFont) {
+		// 既存の簡易描画（数字のみ対応）
+		int currentX = x;
+		for (char c : text) {
+			if (c >= '0' && c <= '9') {
+				DrawDigit(c - '0', currentX, y, scale);
+				currentX += 12 * scale;
+			}
+			else if (c == ' ') {
+				currentX += 6 * scale;
+			}
+			else {
+				// 文字として認識できるように簡易的な点を描画
+				SDL_Rect rect = { currentX + 2 * scale, y + 5 * scale, 2 * scale, 2 * scale };
+				SDL_RenderFillRect(mRenderer, &rect);
+				currentX += 10 * scale;
+			}
 		}
+		return;
 	}
+
+	// 現在の描画色を取得
+	Uint8 r, g, b, a;
+	SDL_GetRenderDrawColor(mRenderer, &r, &g, &b, &a);
+	SDL_Color color = { r, g, b, 255 };
+
+	// テキストサーフェスを作成（UTF-8対応）
+	SDL_Surface* textSurface = TTF_RenderUTF8_Blended(mFont, text.c_str(), color);
+	if (!textSurface) {
+		SDL_Log("テキストのレンダリングに失敗: %s", TTF_GetError());
+		return;
+	}
+
+	// サーフェスからテクスチャを作成
+	SDL_Texture* textTexture = SDL_CreateTextureFromSurface(mRenderer, textSurface);
+	if (!textTexture) {
+		SDL_Log("テクスチャの作成に失敗: %s", SDL_GetError());
+		SDL_FreeSurface(textSurface);
+		return;
+	}
+
+	// 描画先の矩形を設定（スケール適用）
+	SDL_Rect renderQuad = {
+		x,
+		y,
+		textSurface->w * scale,
+		textSurface->h * scale
+	};
+
+	// テクスチャを描画
+	SDL_RenderCopy(mRenderer, textTexture, nullptr, &renderQuad);
+
+	// リソースの解放
+	SDL_DestroyTexture(textTexture);
+	SDL_FreeSurface(textSurface);
 }
 
 // センターラインの描画
@@ -375,7 +448,7 @@ void Renderer::DrawGameOverMessage(int leftScore, int rightScore) {
 	               GameConstants::Colors::YELLOW.g, 
 	               GameConstants::Colors::YELLOW.b);
 	
-	DrawSimpleText("GAME OVER", centerX - 120, centerY - 60, 3);
+	DrawSimpleText("GAME OVER", centerX - 200, centerY - 100, 3);
 	
 	// 勝者の表示
 	SetRenderColor(GameConstants::Colors::WHITE.r, 
@@ -386,17 +459,17 @@ void Renderer::DrawGameOverMessage(int leftScore, int rightScore) {
 		SetRenderColor(GameConstants::Colors::BLUE.r, 
 		               GameConstants::Colors::BLUE.g, 
 		               GameConstants::Colors::BLUE.b);
-		DrawSimpleText("LEFT PLAYER WINS", centerX - 140, centerY - 10, 2);
+		DrawSimpleText("LEFT PLAYER WINS", centerX - 225, centerY - 10, 2);
 	} else {
 		SetRenderColor(GameConstants::Colors::RED.r, 
 		               GameConstants::Colors::RED.g, 
 		               GameConstants::Colors::RED.b);
-		DrawSimpleText("RIGHT PLAYER WINS", centerX - 150, centerY - 10, 2);
+		DrawSimpleText("RIGHT PLAYER WINS", centerX - 225, centerY - 10, 2);
 	}
 	
 	// リスタート指示
 	SetRenderColor(GameConstants::Colors::WHITE.r, 
 	               GameConstants::Colors::WHITE.g, 
 	               GameConstants::Colors::WHITE.b);
-	DrawSimpleText("Press SPACE ENTER or R to restart", centerX - 250, centerY + 40, 1);
+	DrawSimpleText("Press SPACE ENTER or R to restart", centerX - 200, centerY + 100, 1);
 }
