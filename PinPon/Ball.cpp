@@ -70,12 +70,6 @@ void Ball::Update(float deltaTime) {
 	}
 }
 
-// 描画処理（Rendererに移動したため削除）
-void Ball::Draw(SDL_Renderer* renderer) {
-	// この関数は使用されなくなりました
-	// 描画はRenderer::DrawBall()で処理されます
-}
-
 // リセット処理
 void Ball::Reset() {
 	// ボールを初期位置に戻す

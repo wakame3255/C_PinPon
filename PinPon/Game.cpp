@@ -14,6 +14,7 @@ Game::Game()
     , mRightPaddle(nullptr)
     , mIsRunning(true)
     , mTicksCount(0)
+    , mLastDeltaTime(0.0f)
     , mGameState(GameState::Playing)
     , mLeftScore(0)
     , mRightScore(0)
@@ -21,6 +22,10 @@ Game::Game()
     , mIsWaitingForReset(false)
 {
     // メンバー変数の初期化
+    mGameMode = GameMode::PlayerVsPlayer;
+    mCPUDifficulty = CPUDifficulty::Normal;
+    mSelectedMenuIndex = 0;
+    mGameOverSelectedIndex = 0;
 }
 
 // デストラクタ
@@ -52,22 +57,60 @@ bool Game::Initialize() {
     mRightPaddle = std::make_unique<Paddle>(false); // 右パドル
     mRightPaddle->Entry();
     
-    // ゲーム状態を初期化
-    mGameState = GameState::Playing;
+    // ゲーム状態を初期化（メニューから開始）
+    mGameState = GameState::Menu;
     mIsRunning = true;
     
     return true;
 }
 
-void Game::InitiaizeGameMode(GameMode mode, CPUDifficulty difficulty) 
+void Game::InitiaizeGameMode(GameMode mode, CPUDifficulty difficulty)
 {
-	mGameMode = mode;
-	mCPUDifficulty = difficulty;
+    // モードと難易度を設定
+    mGameMode = mode;
+    mCPUDifficulty = difficulty;
 
-    if (mIsCPUMode)
+    // 既存のCPU制御は一旦解除
+    mLeftCPUController.reset();
+    mRightCPUController.reset();
+
+    // モードに応じてCPUを割り当て
+    switch (mGameMode)
     {
-		mCPUController = std::make_unique<CPUController>(mRightPaddle.get(), difficulty);
+    case GameMode::PlayerVsPlayer:
+        // どちらも人間操作
+        break;
+    case GameMode::PlayerVsCPU:
+        // 右をCPU操作
+        mRightCPUController = std::make_unique<CPUController>(mRightPaddle.get(), mCPUDifficulty);
+        break;
+    case GameMode::CPUVsCPU:
+        // 両方CPU操作
+        mLeftCPUController = std::make_unique<CPUController>(mLeftPaddle.get(), mCPUDifficulty);
+        mRightCPUController = std::make_unique<CPUController>(mRightPaddle.get(), mCPUDifficulty);
+        break;
     }
+}
+
+// ゲーム開始処理（メニューなどから呼び出し）
+void Game::StartGame(GameMode mode, CPUDifficulty dificulty)
+{
+    // モード初期化
+    InitiaizeGameMode(mode, dificulty);
+
+    // スコアと状態を初期化
+    mLeftScore = 0;
+    mRightScore = 0;
+    mScoreResetTimer = 0.0f;
+    mIsWaitingForReset = false;
+
+    // オブジェクト初期化
+    if (mBall) { mBall->Reset(); }
+    if (mLeftPaddle) { mLeftPaddle->Entry(); }
+    if (mRightPaddle) { mRightPaddle->Entry(); }
+
+    // プレイ状態へ
+    SetGameState(GameState::Playing);
 }
 
 // ゲームのメインループ
@@ -103,6 +146,9 @@ void Game::ProcessInput() {
         case GameState::GameOver:
             ProcessGameOverInput();
             break;
+        case GameState::Menu:
+            ProcessMenuInput();
+            break;
         default:
             break;
     }
@@ -111,10 +157,10 @@ void Game::ProcessInput() {
 void Game::ProcessMenuInput()
 {
     if (mInputSystem->IsKeyJustPressed(SDL_SCANCODE_UP)) {
-        mSelectedMenuIndex = (mSelectedMenuIndex - 1 + 3) % 3; // 3つのオプション
+        mSelectedMenuIndex = (mSelectedMenuIndex - 1 + 5) % 5; // 5つのオプション
     }
     else if (mInputSystem->IsKeyJustPressed(SDL_SCANCODE_DOWN)) {
-        mSelectedMenuIndex = (mSelectedMenuIndex + 1) % 3;
+        mSelectedMenuIndex = (mSelectedMenuIndex + 1) % 5;
     }
     else if (mInputSystem->IsKeyJustPressed(SDL_SCANCODE_RETURN)) {
         switch (mSelectedMenuIndex) {
@@ -126,6 +172,12 @@ void Game::ProcessMenuInput()
             break;
         case 2: // Player vs CPU (Normal)
             StartGame(GameMode::PlayerVsCPU, CPUDifficulty::Normal);
+            break;
+        case 3: // Player vs CPU (Hard)
+            StartGame(GameMode::PlayerVsCPU, CPUDifficulty::Hard);
+            break;
+        case 4: // CPU vs CPU (Normal)
+            StartGame(GameMode::CPUVsCPU, CPUDifficulty::Normal);
             break;
         }
     }
@@ -156,11 +208,27 @@ void Game::ProcessPauseInput() {
 
 // ゲームオーバー時の入力処理
 void Game::ProcessGameOverInput() {
-    // リスタート（SPACE、ENTER、またはR）- JustPressedを使用
-    if (mInputSystem->IsKeyJustPressed(SDL_SCANCODE_SPACE) ||
-        mInputSystem->IsKeyJustPressed(SDL_SCANCODE_RETURN) ||
-        mInputSystem->IsKeyJustPressed(SDL_SCANCODE_R)) {
-        ResetGame();
+    // 簡易メニュー: 上下で選択、Enter/Spaceで決定、Escでメニューへ
+    if (mInputSystem->IsKeyJustPressed(SDL_SCANCODE_UP)) {
+        mGameOverSelectedIndex = (mGameOverSelectedIndex + 1) % 2; // 上下どちらでもトグル
+    }
+    else if (mInputSystem->IsKeyJustPressed(SDL_SCANCODE_DOWN)) {
+        mGameOverSelectedIndex = (mGameOverSelectedIndex + 1) % 2;
+    }
+    else if (mInputSystem->IsKeyJustPressed(SDL_SCANCODE_ESCAPE)) {
+        // メニューへ戻る
+        mGameState = GameState::Menu;
+    }
+    else if (mInputSystem->IsKeyJustPressed(SDL_SCANCODE_RETURN) ||
+             mInputSystem->IsKeyJustPressed(SDL_SCANCODE_SPACE) ||
+             mInputSystem->IsKeyJustPressed(SDL_SCANCODE_R)) {
+        if (mGameOverSelectedIndex == 0) {
+            // リスタート
+            ResetGame();
+        } else {
+            // メニューへ戻る
+            mGameState = GameState::Menu;
+        }
     }
 }
 
@@ -171,32 +239,42 @@ void Game::HandlePaddleInput() {
         return;
     }
     
-    // 左パドルの操作（W/Sキー）
-    if (mInputSystem->IsKeyPressed(SDL_SCANCODE_W)) {
-        mLeftPaddle->SetDirectionY(-1.0f);  // 上に移動
+    // 左パドル: CPUかプレイヤーかをモードで決定
+    if (mGameMode == GameMode::CPUVsCPU && mLeftCPUController)
+    {
+        mLeftCPUController->Update(mLastDeltaTime, *mBall);
     }
-    else if (mInputSystem->IsKeyPressed(SDL_SCANCODE_S)) {
-        mLeftPaddle->SetDirectionY(1.0f);   // 下に移動
-    }
-    else {
-        mLeftPaddle->SetDirectionY(0.0f);   // 停止
+    else
+    {
+        // 左パドルの操作（W/Sキー）
+        if (mInputSystem->IsKeyPressed(SDL_SCANCODE_W)) {
+            mLeftPaddle->SetDirectionY(-1.0f);  // 上に移動
+        }
+        else if (mInputSystem->IsKeyPressed(SDL_SCANCODE_S)) {
+            mLeftPaddle->SetDirectionY(1.0f);   // 下に移動
+        }
+        else {
+            mLeftPaddle->SetDirectionY(0.0f);   // 停止
+        }
     }
 
-	// CPUモードの場合、右パドルをCPUに制御させる
-	if (mIsCPUMode) {
-		mCPUController->Update(mTicksCount / 1000.0f, *mBall);
-		return;
-	}
-    
-    // 右パドルの操作（上下矢印キー）
-    if (mInputSystem->IsKeyPressed(SDL_SCANCODE_UP)) {
-        mRightPaddle->SetDirectionY(-1.0f); // 上に移動
+    // 右パドル: PvPなら人、PvCPU/CPUVCPUならCPU
+    if ((mGameMode == GameMode::PlayerVsCPU || mGameMode == GameMode::CPUVsCPU) && mRightCPUController)
+    {
+        mRightCPUController->Update(mLastDeltaTime, *mBall);
     }
-    else if (mInputSystem->IsKeyPressed(SDL_SCANCODE_DOWN)) {
-        mRightPaddle->SetDirectionY(1.0f);  // 下に移動
-    }
-    else {
-        mRightPaddle->SetDirectionY(0.0f);  // 停止
+    else
+    {
+        // 右パドルの操作（上下矢印キー）
+        if (mInputSystem->IsKeyPressed(SDL_SCANCODE_UP)) {
+            mRightPaddle->SetDirectionY(-1.0f); // 上に移動
+        }
+        else if (mInputSystem->IsKeyPressed(SDL_SCANCODE_DOWN)) {
+            mRightPaddle->SetDirectionY(1.0f);  // 下に移動
+        }
+        else {
+            mRightPaddle->SetDirectionY(0.0f);  // 停止
+        }
     }
 }
 
@@ -214,6 +292,7 @@ void Game::UpdateGame() {
     }
     
     mTicksCount = SDL_GetTicks();
+    mLastDeltaTime = deltaTime;
     
     // ゲーム状態に応じた更新処理
     switch (mGameState) {
@@ -355,6 +434,9 @@ void Game::GenerateOutput() {
         case GameState::GameOver:
             RenderGameOver();
             break;
+        case GameState::Menu:
+            RenderMenu();
+            break;
         default:
             break;
     }
@@ -395,6 +477,20 @@ void Game::RenderGameOver() {
     
     // ゲームオーバーメッセージの描画
     mRenderer->DrawGameOverMessage(mLeftScore, mRightScore);
+
+    // 選択肢の描画
+    mRenderer->DrawGameOverOptions(mGameOverSelectedIndex);
+}
+
+void Game::RenderMenu() {
+    std::vector<std::string> items = {
+        "Player vs Player",
+        "Player vs CPU (Easy)",
+        "Player vs CPU (Normal)",
+        "Player vs CPU (Hard)",
+        "CPU vs CPU"
+    };
+    mRenderer->DrawMenu(items, mSelectedMenuIndex, "PinPon - Select Mode");
 }
 
 // ゲームの終了処理

@@ -1,61 +1,21 @@
-﻿  CPUController.cpp
-C:\Users\Owner\Desktop\C_Project\PinPon_Project\PinPon\Paddle.h(1,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
-  (ソース ファイル 'CPUController.cpp' をコンパイルしています)
-  
-C:\Users\Owner\Desktop\C_Project\PinPon_Project\PinPon\Vector2.h(1,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
-  (ソース ファイル 'CPUController.cpp' をコンパイルしています)
-  
-C:\Users\Owner\Desktop\C_Project\PinPon_Project\PinPon\Ball.h(1,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
-  (ソース ファイル 'CPUController.cpp' をコンパイルしています)
+﻿  Renderer.cpp
+C:\Users\Owner\Desktop\C_Project\PinPon_Project\PinPon\Renderer.cpp(1,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+C:\Users\Owner\Desktop\C_Project\PinPon_Project\PinPon\Renderer.h(1,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+  (ソース ファイル 'Renderer.cpp' をコンパイルしています)
   
 C:\Users\Owner\Desktop\C_Project\PinPon_Project\PinPon\UtilityData.h(1,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
-  (ソース ファイル 'CPUController.cpp' をコンパイルしています)
-  
-C:\Users\Owner\Desktop\C_Project\PinPon_Project\PinPon\Renderer.h(1,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
-  (ソース ファイル 'CPUController.cpp' をコンパイルしています)
-  
-  Game.cpp
-C:\Users\Owner\Desktop\C_Project\PinPon_Project\PinPon\Game.cpp(1,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
-C:\Users\Owner\Desktop\C_Project\PinPon_Project\PinPon\Game.h(1,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
-  (ソース ファイル 'Game.cpp' をコンパイルしています)
-  
-C:\Users\Owner\Desktop\C_Project\PinPon_Project\PinPon\Paddle.h(1,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
-  (ソース ファイル 'Game.cpp' をコンパイルしています)
-  
-C:\Users\Owner\Desktop\C_Project\PinPon_Project\PinPon\Vector2.h(1,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
-  (ソース ファイル 'Game.cpp' をコンパイルしています)
+  (ソース ファイル 'Renderer.cpp' をコンパイルしています)
   
 C:\Users\Owner\Desktop\C_Project\PinPon_Project\PinPon\Ball.h(1,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
-  (ソース ファイル 'Game.cpp' をコンパイルしています)
-  
-C:\Users\Owner\Desktop\C_Project\PinPon_Project\PinPon\UtilityData.h(1,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
-  (ソース ファイル 'Game.cpp' をコンパイルしています)
-  
-C:\Users\Owner\Desktop\C_Project\PinPon_Project\PinPon\Renderer.h(1,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
-  (ソース ファイル 'Game.cpp' をコンパイルしています)
-  
-C:\Users\Owner\Desktop\C_Project\PinPon_Project\PinPon\InputSystem.h(1,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
-  (ソース ファイル 'Game.cpp' をコンパイルしています)
-  
-  Main.cpp
-C:\Users\Owner\Desktop\C_Project\PinPon_Project\PinPon\Game.h(1,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
-  (ソース ファイル 'Main.cpp' をコンパイルしています)
-  
-C:\Users\Owner\Desktop\C_Project\PinPon_Project\PinPon\Paddle.h(1,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
-  (ソース ファイル 'Main.cpp' をコンパイルしています)
+  (ソース ファイル 'Renderer.cpp' をコンパイルしています)
   
 C:\Users\Owner\Desktop\C_Project\PinPon_Project\PinPon\Vector2.h(1,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
-  (ソース ファイル 'Main.cpp' をコンパイルしています)
+  (ソース ファイル 'Renderer.cpp' をコンパイルしています)
   
-C:\Users\Owner\Desktop\C_Project\PinPon_Project\PinPon\Ball.h(1,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
-  (ソース ファイル 'Main.cpp' をコンパイルしています)
+C:\Users\Owner\Desktop\C_Project\PinPon_Project\PinPon\Paddle.h(1,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+  (ソース ファイル 'Renderer.cpp' をコンパイルしています)
   
-C:\Users\Owner\Desktop\C_Project\PinPon_Project\PinPon\UtilityData.h(1,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
-  (ソース ファイル 'Main.cpp' をコンパイルしています)
-  
-C:\Users\Owner\Desktop\C_Project\PinPon_Project\PinPon\Renderer.h(1,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
-  (ソース ファイル 'Main.cpp' をコンパイルしています)
-  
-  コードを生成中...
-Game.obj : error LNK2019: 未解決の外部シンボル "private: void __cdecl Game::StartGame(enum GameMode,enum CPUDifficulty)" (?StartGame@Game@@AEAAXW4GameMode@@W4CPUDifficulty@@@Z) が関数 "private: void __cdecl Game::ProcessMenuInput(void)" (?ProcessMenuInput@Game@@AEAAXXZ) で参照されました
-C:\Users\Owner\Desktop\C_Project\PinPon_Project\x64\Debug\PinPon.exe : fatal error LNK1120: 1 件の未解決の外部参照
+  PinPon.vcxproj -> C:\Users\Owner\Desktop\C_Project\PinPon_Project\x64\Debug\PinPon.exe
+  C:\SDL2-2.26.5\lib\x64\SDL2.dll
+  C:\SDL2-2.26.5\lib\x64\SDL2_ttf.dll
+  2 個のファイルをコピーしました

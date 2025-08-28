@@ -1,6 +1,5 @@
 #pragma once
 #include "Vector2.h"
-#include "SDL.h"
 #include "UtilityData.h"
 
 class Ball
@@ -19,9 +18,6 @@ public:
 	
 	// 更新処理（毎フレーム呼ばれる）
 	void Update(float deltaTime);
-	
-	// 描画処理
-	void Draw(SDL_Renderer* renderer);
 	
 	// リセット処理（得点時などに呼ばれる）
 	void Reset();

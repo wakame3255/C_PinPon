@@ -471,5 +471,65 @@ void Renderer::DrawGameOverMessage(int leftScore, int rightScore) {
 	SetRenderColor(GameConstants::Colors::WHITE.r, 
 	               GameConstants::Colors::WHITE.g, 
 	               GameConstants::Colors::WHITE.b);
-	DrawSimpleText("Press SPACE ENTER or R to restart", centerX - 200, centerY + 100, 1);
+}
+
+void Renderer::DrawGameOverOptions(int selectedIndex)
+{
+    int centerX = static_cast<int>(GameConstants::WINDOW_WIDTH / 2);
+    int centerY = static_cast<int>(GameConstants::WINDOW_HEIGHT / 2);
+
+    // オプション表示
+    const char* optRestart = "Restart";
+    const char* optMenu = "Back to Menu";
+
+    // 選択中の方を強調（黄色）、非選択は白
+    if (selectedIndex == 0) {
+        SetRenderColor(GameConstants::Colors::YELLOW.r, GameConstants::Colors::YELLOW.g, GameConstants::Colors::YELLOW.b);
+        DrawSimpleText(optRestart, centerX - 80, centerY + 40, 2);
+        SetRenderColor(GameConstants::Colors::WHITE.r, GameConstants::Colors::WHITE.g, GameConstants::Colors::WHITE.b);
+        DrawSimpleText(optMenu, centerX - 120, centerY + 90, 2);
+    } else {
+        SetRenderColor(GameConstants::Colors::WHITE.r, GameConstants::Colors::WHITE.g, GameConstants::Colors::WHITE.b);
+        DrawSimpleText(optRestart, centerX - 80, centerY + 40, 2);
+        SetRenderColor(GameConstants::Colors::YELLOW.r, GameConstants::Colors::YELLOW.g, GameConstants::Colors::YELLOW.b);
+        DrawSimpleText(optMenu, centerX - 120, centerY + 90, 2);
+    }
+}
+
+// メニュー描画
+void Renderer::DrawMenu(const std::vector<std::string>& items, int selectedIndex, const std::string& title)
+{
+    // 背景クリアは呼び出し側で実行済みの前提
+    int centerX = static_cast<int>(GameConstants::WINDOW_WIDTH / 2);
+    int startY = static_cast<int>(GameConstants::WINDOW_HEIGHT / 3);
+
+    // タイトル
+    if (!title.empty()) {
+        SetRenderColor(GameConstants::Colors::YELLOW.r,
+                       GameConstants::Colors::YELLOW.g,
+                       GameConstants::Colors::YELLOW.b);
+        DrawSimpleText(title, centerX - 160, startY - 80, 2);
+    }
+
+    // メニュー項目
+    for (size_t i = 0; i < items.size(); ++i) {
+        bool selected = static_cast<int>(i) == selectedIndex;
+        if (selected) {
+            SetRenderColor(GameConstants::Colors::BLUE.r,
+                           GameConstants::Colors::BLUE.g,
+                           GameConstants::Colors::BLUE.b);
+        } else {
+            SetRenderColor(GameConstants::Colors::WHITE.r,
+                           GameConstants::Colors::WHITE.g,
+                           GameConstants::Colors::WHITE.b);
+        }
+        int y = startY + static_cast<int>(i) * 40;
+        DrawSimpleText(items[i], centerX - 140, y, selected ? 2 : 2);
+    }
+
+    // 操作ヒント
+    SetRenderColor(GameConstants::Colors::WHITE.r,
+                   GameConstants::Colors::WHITE.g,
+                   GameConstants::Colors::WHITE.b);
+    DrawSimpleText("Use UP/DOWN and ENTER", centerX - 160, startY + static_cast<int>(items.size()) * 40 + 40, 1);
 }

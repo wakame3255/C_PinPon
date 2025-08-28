@@ -1,9 +1,8 @@
 #pragma once
 #include "Vector2.h"
-#include "SDL.h"
-#include "Ball.h"
-#include "Renderer.h"
 #include "UtilityData.h"
+
+class Ball;
 
 class Paddle
 {
@@ -24,9 +23,6 @@ public:
 	
 	// 更新処理
 	void Update(float deltaTime);
-	
-	// 描画処理
-	void Draw(SDL_Renderer* renderer);
 	
 	// ボールとの衝突判定
 	bool CheckCollision(const Ball& ball);

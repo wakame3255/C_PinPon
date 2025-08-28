@@ -1,4 +1,5 @@
 #include "Paddle.h"
+#include "Ball.h"
 #include <algorithm>
 #include <cmath>
 
@@ -47,11 +48,6 @@ void Paddle::Update(float deltaTime) {
 	}
 }
 
-// 描画処理（Rendererに移動したため削除）
-void Paddle::Draw(SDL_Renderer* renderer) {
-	// この関数は使用されなくなりました
-	// 描画はRenderer::DrawPaddle()で処理されます
-}
 
 // ボールとの衝突判定
 bool Paddle::CheckCollision(const Ball& ball) {

@@ -32,7 +32,8 @@ private:
 	// ゲームコンポーネント
 	std::unique_ptr<Renderer> mRenderer;        // レンダラー
 	std::unique_ptr<InputSystem> mInputSystem;  // 入力システム
-	std::unique_ptr<CPUController> mCPUController; // CPUコントローラー（シングルプレイヤーモード用）
+	std::unique_ptr<CPUController> mLeftCPUController;  // 左パドル用CPU
+	std::unique_ptr<CPUController> mRightCPUController; // 右パドル用CPU
 	
 	// ゲームオブジェクト
 	std::unique_ptr<Ball> mBall;                // ボール
@@ -41,8 +42,8 @@ private:
 	
 	// ゲーム状態
 	bool mIsRunning;      // ゲームが実行中かどうか
-	bool mIsCPUMode;    // CPUモード（シングルプレイヤー）かどうか
 	Uint32 mTicksCount;   // 前フレームからの経過時間
+	float mLastDeltaTime; // 直近フレームのデルタタイム
 	GameState mGameState; // 現在のゲーム状態
 
 	//CPU関連変数
@@ -52,6 +53,7 @@ private:
 	// メニュー関連
 	MenuState mMenuState; // メニュー状態
 	int mSelectedMenuIndex; // メニューで選択されている項目のインデックス
+	int mGameOverSelectedIndex; // ゲームオーバー時の選択（0:リスタート 1:メニューに戻る）
 	
 	// スコア
 	int mLeftScore;       // 左プレイヤーのスコア
@@ -72,9 +74,7 @@ private:
 	void ProcessGameOverInput(); // ゲームオーバー時の入力処理
 
 	//CPU関連
-	void InitiaizeGameMode(GameMode mode, CPUDifficulty difficulty); // ゲームモードの初期化)
-	void HandleCPUMovement(float deltaTime); // CPUの動きの処理
-	void SwichGameMode(CPUDifficulty difficulty); // ゲームモードの切り替え
+	void InitiaizeGameMode(GameMode mode, CPUDifficulty difficulty); // ゲームモードの初期化
 	
 	void UpdateGameplay(float deltaTime);  // ゲームプレイの更新
 	void UpdatePause(float deltaTime);     // ポーズ状態の更新
@@ -83,10 +83,10 @@ private:
 	void RenderGame();      // ゲーム画面の描画
 	void RenderPause();     // ポーズ画面の描画
 	void RenderGameOver();  // ゲームオーバー画面の描画
+	void RenderMenu();      // メニュー画面の描画
 
 	//メニューメソッド
 	void ProcessMenuInput(); // メニュー画面の入力処理
-	void RenderMenu();   // メインメニューの描画
 	void StartGame(GameMode mode, CPUDifficulty dificulty = CPUDifficulty::Normal);
 	
 	// ボールのリセット判定

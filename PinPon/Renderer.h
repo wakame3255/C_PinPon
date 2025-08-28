@@ -51,6 +51,8 @@ public:
 	// メッセージ描画
 	void DrawPauseMessage();
 	void DrawGameOverMessage(int leftScore, int rightScore);
+	void DrawGameOverOptions(int selectedIndex);
+	void DrawMenu(const std::vector<std::string>& items, int selectedIndex, const std::string& title = "");
 	
 	// 色設定のヘルパー関数
 	void SetRenderColor(int r, int g, int b, int a = 255);
