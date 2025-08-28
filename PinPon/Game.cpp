@@ -59,6 +59,17 @@ bool Game::Initialize() {
     return true;
 }
 
+void Game::InitiaizeGameMode(GameMode mode, CPUDifficulty difficulty) 
+{
+	mGameMode = mode;
+	mCPUDifficulty = difficulty;
+
+    if (mIsCPUMode)
+    {
+		mCPUController = std::make_unique<CPUController>(mRightPaddle.get(), difficulty);
+    }
+}
+
 // ゲームのメインループ
 void Game::RunLoop()
 {
@@ -94,6 +105,29 @@ void Game::ProcessInput() {
             break;
         default:
             break;
+    }
+}
+
+void Game::ProcessMenuInput()
+{
+    if (mInputSystem->IsKeyJustPressed(SDL_SCANCODE_UP)) {
+        mSelectedMenuIndex = (mSelectedMenuIndex - 1 + 3) % 3; // 3つのオプション
+    }
+    else if (mInputSystem->IsKeyJustPressed(SDL_SCANCODE_DOWN)) {
+        mSelectedMenuIndex = (mSelectedMenuIndex + 1) % 3;
+    }
+    else if (mInputSystem->IsKeyJustPressed(SDL_SCANCODE_RETURN)) {
+        switch (mSelectedMenuIndex) {
+        case 0: // Player vs Player
+            StartGame(GameMode::PlayerVsPlayer);
+            break;
+        case 1: // Player vs CPU (Easy)
+            StartGame(GameMode::PlayerVsCPU, CPUDifficulty::Easy);
+            break;
+        case 2: // Player vs CPU (Normal)
+            StartGame(GameMode::PlayerVsCPU, CPUDifficulty::Normal);
+            break;
+        }
     }
 }
 
@@ -147,6 +181,12 @@ void Game::HandlePaddleInput() {
     else {
         mLeftPaddle->SetDirectionY(0.0f);   // 停止
     }
+
+	// CPUモードの場合、右パドルをCPUに制御させる
+	if (mIsCPUMode) {
+		mCPUController->Update(mTicksCount / 1000.0f, *mBall);
+		return;
+	}
     
     // 右パドルの操作（上下矢印キー）
     if (mInputSystem->IsKeyPressed(SDL_SCANCODE_UP)) {

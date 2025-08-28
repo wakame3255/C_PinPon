@@ -33,8 +33,6 @@ public:
 private:
 	Vector2 PredictBallPosition(const Ball& ball, float timeAhead);
 
-	Vector2 CalculateOptimalMovement(const Ball& ball);
-
 	bool ShouldReact(float deltaTime);
 
 	void TrackBall(const Ball& ball);

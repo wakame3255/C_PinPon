@@ -19,6 +19,13 @@ enum class GameState {
     Menu        // メニュー画面
 };
 
+enum class MenuState
+{
+	MainMenu,
+	GameModeSelection,
+	InGame
+};
+
 class Game
 {
 private:
@@ -37,7 +44,14 @@ private:
 	bool mIsCPUMode;    // CPUモード（シングルプレイヤー）かどうか
 	Uint32 mTicksCount;   // 前フレームからの経過時間
 	GameState mGameState; // 現在のゲーム状態
-	GameMode mGameMode;   // ゲームモード（シングルプレイヤー or マルチプレイヤー）
+
+	//CPU関連変数
+	GameMode mGameMode;   // ゲームモード（シングルプレイヤー or マルチプレイヤー
+	CPUDifficulty mCPUDifficulty; // CPUの難易度
+
+	// メニュー関連
+	MenuState mMenuState; // メニュー状態
+	int mSelectedMenuIndex; // メニューで選択されている項目のインデックス
 	
 	// スコア
 	int mLeftScore;       // 左プレイヤーのスコア
@@ -58,7 +72,7 @@ private:
 	void ProcessGameOverInput(); // ゲームオーバー時の入力処理
 
 	//CPU関連
-	void InitiaizeGameMode(GameMode mode); // ゲームモードの初期化)
+	void InitiaizeGameMode(GameMode mode, CPUDifficulty difficulty); // ゲームモードの初期化)
 	void HandleCPUMovement(float deltaTime); // CPUの動きの処理
 	void SwichGameMode(CPUDifficulty difficulty); // ゲームモードの切り替え
 	
@@ -69,6 +83,11 @@ private:
 	void RenderGame();      // ゲーム画面の描画
 	void RenderPause();     // ポーズ画面の描画
 	void RenderGameOver();  // ゲームオーバー画面の描画
+
+	//メニューメソッド
+	void ProcessMenuInput(); // メニュー画面の入力処理
+	void RenderMenu();   // メインメニューの描画
+	void StartGame(GameMode mode, CPUDifficulty dificulty = CPUDifficulty::Normal);
 	
 	// ボールのリセット判定
 	void CheckBallReset();
