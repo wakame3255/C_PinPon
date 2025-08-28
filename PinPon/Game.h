@@ -2,6 +2,8 @@
 #include <memory>
 #include <vector>
 #include "SDL.h"
+#include "GameMode.h"
+#include "CPUController.h"
 
 // 前方宣言
 class Ball;
@@ -23,6 +25,7 @@ private:
 	// ゲームコンポーネント
 	std::unique_ptr<Renderer> mRenderer;        // レンダラー
 	std::unique_ptr<InputSystem> mInputSystem;  // 入力システム
+	std::unique_ptr<CPUController> mCPUController; // CPUコントローラー（シングルプレイヤーモード用）
 	
 	// ゲームオブジェクト
 	std::unique_ptr<Ball> mBall;                // ボール
@@ -31,8 +34,10 @@ private:
 	
 	// ゲーム状態
 	bool mIsRunning;      // ゲームが実行中かどうか
+	bool mIsCPUMode;    // CPUモード（シングルプレイヤー）かどうか
 	Uint32 mTicksCount;   // 前フレームからの経過時間
 	GameState mGameState; // 現在のゲーム状態
+	GameMode mGameMode;   // ゲームモード（シングルプレイヤー or マルチプレイヤー）
 	
 	// スコア
 	int mLeftScore;       // 左プレイヤーのスコア
@@ -51,6 +56,11 @@ private:
 	void ProcessGameInput();   // ゲーム中の入力処理
 	void ProcessPauseInput();  // ポーズ中の入力処理
 	void ProcessGameOverInput(); // ゲームオーバー時の入力処理
+
+	//CPU関連
+	void InitiaizeGameMode(GameMode mode); // ゲームモードの初期化)
+	void HandleCPUMovement(float deltaTime); // CPUの動きの処理
+	void SwichGameMode(CPUDifficulty difficulty); // ゲームモードの切り替え
 	
 	void UpdateGameplay(float deltaTime);  // ゲームプレイの更新
 	void UpdatePause(float deltaTime);     // ポーズ状態の更新

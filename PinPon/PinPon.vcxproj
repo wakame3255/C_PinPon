@@ -141,6 +141,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Ball.cpp" />
+    <ClCompile Include="CPUController.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="InputSystem.cpp" />
     <ClCompile Include="Main.cpp" />
@@ -150,12 +151,14 @@
   <ItemGroup>
     <ClInclude Include="Ball.h" />
     <ClInclude Include="CollisionChecker.h" />
+    <ClInclude Include="CPUController.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="InputSystem.h" />
     <ClInclude Include="Paddle.h" />
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="UtilityData.h" />
     <ClInclude Include="Vector2.h" />
+    <ClInclude Include="GameMode.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
