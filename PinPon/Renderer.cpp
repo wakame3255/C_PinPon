@@ -448,7 +448,7 @@ void Renderer::DrawGameOverMessage(int leftScore, int rightScore) {
 	               GameConstants::Colors::YELLOW.g, 
 	               GameConstants::Colors::YELLOW.b);
 	
-	DrawSimpleText("GAME OVER", centerX - 200, centerY - 100, 3);
+	DrawSimpleText("GAME OVER", centerX - 150, centerY - 100, 3);
 	
 	// 勝者の表示
 	SetRenderColor(GameConstants::Colors::WHITE.r, 
@@ -459,12 +459,12 @@ void Renderer::DrawGameOverMessage(int leftScore, int rightScore) {
 		SetRenderColor(GameConstants::Colors::BLUE.r, 
 		               GameConstants::Colors::BLUE.g, 
 		               GameConstants::Colors::BLUE.b);
-		DrawSimpleText("LEFT PLAYER WINS", centerX - 225, centerY - 10, 2);
+		DrawSimpleText("LEFT PLAYER WINS", centerX - 200, centerY - 10, 2);
 	} else {
 		SetRenderColor(GameConstants::Colors::RED.r, 
 		               GameConstants::Colors::RED.g, 
 		               GameConstants::Colors::RED.b);
-		DrawSimpleText("RIGHT PLAYER WINS", centerX - 225, centerY - 10, 2);
+		DrawSimpleText("RIGHT PLAYER WINS", centerX - 200, centerY - 10, 2);
 	}
 	
 	// リスタート指示
@@ -487,12 +487,12 @@ void Renderer::DrawGameOverOptions(int selectedIndex)
         SetRenderColor(GameConstants::Colors::YELLOW.r, GameConstants::Colors::YELLOW.g, GameConstants::Colors::YELLOW.b);
         DrawSimpleText(optRestart, centerX - 80, centerY + 40, 2);
         SetRenderColor(GameConstants::Colors::WHITE.r, GameConstants::Colors::WHITE.g, GameConstants::Colors::WHITE.b);
-        DrawSimpleText(optMenu, centerX - 120, centerY + 90, 2);
+        DrawSimpleText(optMenu, centerX - 150, centerY + 90, 2);
     } else {
         SetRenderColor(GameConstants::Colors::WHITE.r, GameConstants::Colors::WHITE.g, GameConstants::Colors::WHITE.b);
         DrawSimpleText(optRestart, centerX - 80, centerY + 40, 2);
         SetRenderColor(GameConstants::Colors::YELLOW.r, GameConstants::Colors::YELLOW.g, GameConstants::Colors::YELLOW.b);
-        DrawSimpleText(optMenu, centerX - 120, centerY + 90, 2);
+        DrawSimpleText(optMenu, centerX - 150, centerY + 90, 2);
     }
 }
 
@@ -508,7 +508,7 @@ void Renderer::DrawMenu(const std::vector<std::string>& items, int selectedIndex
         SetRenderColor(GameConstants::Colors::YELLOW.r,
                        GameConstants::Colors::YELLOW.g,
                        GameConstants::Colors::YELLOW.b);
-        DrawSimpleText(title, centerX - 160, startY - 80, 2);
+        DrawSimpleText(title, centerX - 250, startY - 80, 2);
     }
 
     // メニュー項目
@@ -524,7 +524,7 @@ void Renderer::DrawMenu(const std::vector<std::string>& items, int selectedIndex
                            GameConstants::Colors::WHITE.b);
         }
         int y = startY + static_cast<int>(i) * 40;
-        DrawSimpleText(items[i], centerX - 140, y, selected ? 2 : 2);
+        DrawSimpleText(items[i], centerX - 250, y, selected ? 2 : 2);
     }
 
     // 操作ヒント
