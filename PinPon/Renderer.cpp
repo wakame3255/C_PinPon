@@ -65,7 +65,7 @@ bool Renderer::Initialize()
 	}
 
 	// フォントの読み込み（WindowsのメイリオまたはMS Gothic）
-	mFont = TTF_OpenFont("fonts/arial.ttf", 24);
+	mFont = TTF_OpenFont("fonts/msgothic.ttc", 24);
 	if (!mFont) {
 		// フォールバック：MS Gothic を試す
 		mFont = TTF_OpenFont("C:\\Windows\\Fonts\\msgothic.ttc", 24);
@@ -332,6 +332,7 @@ void Renderer::DrawSimpleText(const std::string& text, int x, int y, int scale) 
 	if (!mFont) {
 		// 既存の簡易描画（数字のみ対応）
 		int currentX = x;
+
 		for (char c : text) {
 			if (c >= '0' && c <= '9') {
 				DrawDigit(c - '0', currentX, y, scale);
